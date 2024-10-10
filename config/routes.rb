@@ -1,16 +1,17 @@
 Rails.application.routes.draw do
+  # Devise routes for user authentication
   devise_for :users
+
+  # Root path for the application (homepage)
   root to: "pages#home"
 
-  # health check for route
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Nested routes for properties and bookings
+  resources :properties do
+    resources :bookings, only: [:new, :create]  # Bookings can be created under properties
+  end
 
-  # routes for properties
-  resources :properties, only: [:index, :new, :create] do
-    # nested routes for bookings under properties
-    resources :bookings, only: [:new, :create] do
-      # nnested routes for reviews under bookings, started just with create and destroy
-      resources :reviews, only: [:create, :destroy]
-    end
+  # Nested routes for bookings and reviews
+  resources :bookings do
+    resources :reviews, only: [:create, :destroy]  # Reviews can be created or deleted under bookings
   end
 end
