@@ -9,6 +9,8 @@ class PropertiesController < ApplicationController
 
   def create
     @property = Property.new(property_params)
+    @property.user = current_user
+
     if @property.save
       redirect_to @property, notice: 'Property was successfully created.'
     else
@@ -19,6 +21,6 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:price_per_night, :title, :description, :location, :max_guests, :property_type, :user_id)
+    params.require(:property).permit(:price_per_night, :title, :description, :location, :max_guests, :property_type)
   end
 end
