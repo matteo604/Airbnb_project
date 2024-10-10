@@ -7,7 +7,7 @@ class CreateBookings < ActiveRecord::Migration[7.1]
       t.date :end_date
       t.string :status
       t.integer :number_of_guests
-      t.decimal :total_price
+      t.decimal :total_price, precision: 10, scale: 2
 
       t.timestamps
     end
