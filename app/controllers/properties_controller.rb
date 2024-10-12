@@ -7,6 +7,14 @@ class PropertiesController < ApplicationController
     @property = Property.new
   end
 
+  def search
+    # TO IMPLEMENT
+  end
+
+  def show
+    @property = Property.find(params[:id])
+  end
+
   def create
     @property = Property.new(property_params)
     @property.user = current_user

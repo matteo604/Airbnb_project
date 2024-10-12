@@ -4,6 +4,10 @@ class BookingsController < ApplicationController
     @booking = @property.bookings.new
   end
 
+  def show
+    # TO IMPLEMENT
+  end
+
   def create
     @property = Property.find(params[:property_id])
     @booking = @property.bookings.new(booking_params)
