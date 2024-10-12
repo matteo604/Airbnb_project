@@ -26,6 +26,14 @@ class PropertiesController < ApplicationController
     end
   end
 
+  def edit
+    # TO IMPLEMENT
+  end
+
+  def update
+    # TO IMPLEMENT
+  end
+
   private
 
   def property_params
