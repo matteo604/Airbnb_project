@@ -4,10 +4,15 @@ class BookingsController < ApplicationController
     @booking = @property.bookings.new
   end
 
+  def show
+    # TO IMPLEMENT
+  end
+
   def create
     @property = Property.find(params[:property_id])
     @booking = @property.bookings.new(booking_params)
     @booking.user = current_user
+    @booking.property = @property
 
     number_of_nights = (@booking.end_date - @booking.start_date).to_i
     @booking.total_price = number_of_nights * @property.price_per_night
