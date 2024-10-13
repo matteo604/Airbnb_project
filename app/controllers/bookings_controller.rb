@@ -5,7 +5,6 @@ class BookingsController < ApplicationController
   end
 
   def show
-    # TO IMPLEMENT
   end
 
   def create
