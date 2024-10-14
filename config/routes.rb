@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   # Root path for the application (homepage)
-  root to: "pages#home"
+  root to: "properties#index"
 
   # Nested routes for properties and bookings
   resources :properties do

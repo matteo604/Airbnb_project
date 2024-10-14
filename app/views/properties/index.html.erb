@@ -1,13 +1,27 @@
-<h1>Properties</h1>
 
-<% if @properties.any? %>
-  <% @properties.each do |property| %>
-    <div class="property-card">
-      <h2><%= property.title %></h2>
-      <p><%= property.location %></p>
-      <p>Price per night: <%= property.price_per_night %></p>
-    </div>
-  <% end %>
-<% else %>
-  <p>No properties found</p>
-<% end %>
+<div class="homepage_banner d-flex justify-content-center align-items-center">
+ <div class="topnav">
+  <div class="search-container">
+    <form action="/action_page.php">
+      <%= link_to 'Add a new property', new_property_path, class: 'btn btn-primary mt-3'%>
+    </form>
+  </div>
+</div>
+</div>
+<h2 class="text-center mt-3"> All the properties</h2>
+  <div class="container mt-4">
+    <div class="three-columns">
+      <% @properties.each do |property| %>
+        <div class="card h-100 property-card">
+          <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
+          <div class="card-body">
+          <h5 class="card-title">
+             <%= link_to property.title, property_path(property) %>
+          </h5>
+           <p class="card-text"><%= property.description %></p>
+           <p class="price align-self-end"><strong><%= property.price_per_night %>$</strong></p>
+          </div>
+        </div>
+      <% end %>
+  </div>
+</div>
