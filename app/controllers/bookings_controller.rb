@@ -5,6 +5,7 @@ class BookingsController < ApplicationController
   end
 
   def show
+    @booking = Booking.find(params[:id])
   end
 
   def create
@@ -17,7 +18,7 @@ class BookingsController < ApplicationController
     @booking.total_price = number_of_nights * @property.price_per_night
 
     if @booking.save
-      redirect_to @booking, notice: 'Booking was successfully created.'
+      redirect_to properties_path, notice: 'Booking was successfully created.'
     else
       render :new
     end
