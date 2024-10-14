@@ -1,0 +1,43 @@
+.auth-form {
+  max-width: 450px;
+  margin: 0 auto;
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+
+  .form-inputs {
+    margin-bottom: 20px;
+  }
+
+  .text-danger {
+    font-size: 14px;
+    margin-top: -10px;
+  }
+
+  .form-actions {
+    margin-top: 40px;
+  }
+
+  .card {
+    padding: 30px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.custom-btn {
+  background-color: #e11860;
+  border-color: #e11860;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 20px;
+}
+
+.custom-btn:hover {
+  background-color: #c31554;
+}
+
+@media (max-width: 600px) {
+  .custom-btn {
+    width: 100%;
+  }
+}

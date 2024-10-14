@@ -8,7 +8,12 @@ class PropertiesController < ApplicationController
   end
 
   def search
-    # TO IMPLEMENT
+    if params[:query].present?
+      @properties = Property.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    else
+      @properties = Property.all
+    end
+    render :index
   end
 
   def show
