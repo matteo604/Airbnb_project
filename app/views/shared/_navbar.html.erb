@@ -1,0 +1,40 @@
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon" style="background-color: white;">
+  <div class="container-fluid">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/logo.png" %>
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item active">
+            <%= link_to "Home", root_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="d-flex align-items-center">
+
+        <!-- Menü und Profil Button -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-light rounded-pill d-flex align-items-center p-3 border border-info" style="height: 60px;" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bars me-4"></i>
+            <i class="fas fa-user"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <% if user_signed_in? %>
+              <li><%= link_to "Home", root_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+            <% else %>
+              <li><%= link_to "Login", new_user_session_path, class: "dropdown-item" %></li>
+              <li><%= link_to "Sign Up", new_user_registration_path, class: "dropdown-item" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
