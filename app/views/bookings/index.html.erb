@@ -1,25 +1,12 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <a class="navbar-brand text-white" href="#">LOGO HERE</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="#">Login</a>
-          </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-
 <h2 class="text-center mt-3"> Here are all your bookings</h2>
   <div class="container mt-4">
 
     <div class="one_column">
-      
 
-      <%= render partial: "booking_details_card"%>
-      <%= render partial: "booking_details_card"%>
+      <% @bookings.each do |booking| %>
+        <%= render partial: "booking_details_card", locals: { booking: booking }  %>
+      <% end  %>
+
     </div>
   </div>
 </div>

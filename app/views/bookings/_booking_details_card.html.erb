@@ -13,11 +13,13 @@
       <h3 class="text-center pb-3">Booking Details</h3>
       <ul class="fs-4">
         <li>Booking Date : 29/09/2023</li>
-        <li>Check-in Date : 01/10/2023</li>
-        <li>Check-out Date : 04/10/2023</li>
-        <li>Number of guests : 5</li>
-        <li>Total price paid : 99$</li>
+        <li>Check-in Date : <%= booking.start_date.strftime('%B %d, %Y') %></li>
+        <li>Check-out Date : <%= booking.end_date.strftime('%B %d, %Y') %></li>
+        <li>Number of guests : <%= booking.number_of_guests %></li>
+        <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
       </ul>
+
+      <h3 class="text-center pt-4">This booking has passed</h3>
 
     </div>
   </div>
