@@ -1,4 +1,10 @@
 class BookingsController < ApplicationController
+
+  def index
+    @bookings = Booking.all
+  end
+
+
   def new
     @property = Property.find(params[:property_id])
     @booking = @property.bookings.new
