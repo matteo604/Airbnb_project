@@ -1,26 +1,47 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <a class="navbar-brand text-white" href="#">LOGO HERE</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="#">Login</a>
-          </li>
-      </ul>
+<div class="homepage_banner d-flex justify-content-center align-items-center">
+  <div class="">
+    <div class="search-bar-container d-flex justify-content-center align-items-center mt-5">
+      <div class="search-bar p-3 d-flex align-items-center rounded-pill">
+        <%= form_with url: search_properties_path, method: :get, local: true, class: 'd-flex align-items-center' do %>
+          <div class="input-group">
+            <div class="search-input px-3">
+              <label for="query">Where</label>
+              <input type="text" id="query" name="query" placeholder="Search destinations" class="form-control">
+            </div>
+            <div class="search-input px-3">
+              <label for="check-in">Check in</label>
+              <input type="text" id="check-in" name="check_in" placeholder="Add dates" class="form-control" data-controller="datepicker">
+            </div>
+            <div class="search-input px-3">
+              <label for="check-out">Check out</label>
+              <input type="text" id="check-out" name="check_out" placeholder="Add dates" class="form-control" data-controller="datepicker">
+            </div>
+            <div class="search-input px-3">
+              <label for="who">Who</label>
+              <!-- dropdown for nmber of guests -->
+              <select id="who" name="who" class="form-control white-border-dropdown">
+                <option value="">Add guests</option>
+                <% (1..10).each do |i| %>
+                  <option value="<%= i %>"><%= i %> guest<%= 's' if i > 1 %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class="search-btn ms-3">
+            <button class="btn btn-danger rounded-circle">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
+</div>
 
-<div class="homepage_banner d-flex justify-content-center align-items-center">
- <div class="topnav">
-  <div class="search-container">
-    <form action="/action_page.php">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-  </div>
-</div>
-</div>
+
+
+
 
 <div>
   <div class="container mt-4">
@@ -46,7 +67,6 @@
           <p class="card-text">A 4 bedroom townhouse in London</p>
         </div>
       </div>
-
 
     </div>
   </div>

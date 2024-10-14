@@ -8,7 +8,15 @@ class PropertiesController < ApplicationController
   end
 
   def search
-    # TO IMPLEMENT
+    if params[:query].present?
+      @properties = Property.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+      if @properties.empty?
+       flash[:alert] = "Please type the correct location or title."
+      end
+    else
+      @properties = Property.all
+    end
+    render :index
   end
 
   def show
