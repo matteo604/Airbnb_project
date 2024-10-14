@@ -48,28 +48,28 @@
             <p>No future bookings.</p>
           <% end %>
         </div>
+
       <% else %>
         <h3 class="text-center mb-4 mt-4">Make a Booking</h3>
-        <%= form_with(model: @booking, url: property_bookings_path(@property), local: true, html: { class: 'booking-form' }) do |form| %>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <%= form.hidden_field :property_id, value: @property.id %>
-              <%= form.label :start_date, class: 'font-weight-bold' %>
-              <%= form.date_select :start_date, class: 'form-control', prompt: { day: 'Day', month: 'Month', year: 'Year' } %>
-            </div>
-            <div class="form-group col-md-6">
-              <%= form.label :end_date, class: 'font-weight-bold' %>
-              <%= form.date_select :end_date, class: 'form-control', prompt: { day: 'Day', month: 'Month', year: 'Year' } %>
-            </div>
+        <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
+        <div class="input-group">
+          <div class="search-input px-3">
+            <%= form.label :start_date, 'Check in', for: 'check-in', class: 'font-weight-bold' %>
+             <%= form.text_field :start_date, id: 'check-in', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
           </div>
-          <div class="form-group">
-            <%= form.label :number_of_guests, class: 'font-weight-bold' %>
-            <%= form.number_field :number_of_guests, class: 'form-control', min: 1, placeholder: 'Number of Guests' %>
+          <div class="search-input px-3">
+            <%= form.label :end_date, 'Check out', for: 'check-out', class: 'font-weight-bold' %>
+            <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
           </div>
-          <div class="form-group">
-            <%= form.submit 'Create Booking', class: 'btn btn-primary btn-block' %>
+          <div class="search-input px-3">
+          <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
+          <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
           </div>
-        <% end %>
+        </div>
+        <div class="form-group mt-4 align-text: end">
+          <%= form.submit 'Confirm', class: 'btn btn-primary btn-block' %>
+        </div>
+      <% end %>
       <% end %>
     </div>
   </div>
