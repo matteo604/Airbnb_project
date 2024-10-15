@@ -4,3 +4,4 @@ class Booking < ApplicationRecord
   has_one :review, dependent: :destroy
   validates :start_date, :end_date, presence: true
 end
+# comment to fix an issue
