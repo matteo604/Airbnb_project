@@ -46,16 +46,11 @@
     <% @properties.each do |property| %>
       <div class="col-md-4 mb-4">
         <div class="card h-100 property-card">
-<<<<<<< HEAD
-          <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-=======
          <% if property.photo.attached? %>
            <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
            <% else %>
             <p> No photo </p>
           <% end %>
-
->>>>>>> master
           <div class="card-body">
             <h5 class="card-title">
               <%= link_to property.title, property_path(property) %>
