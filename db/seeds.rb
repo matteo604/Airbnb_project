@@ -87,6 +87,7 @@ londonFlat = Property.create(
   max_guests: 2,
   property_type: 'flat'
 )
+
 londonFlat.photo.attach(
   io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
   filename: "367058212.jpg",
