@@ -46,7 +46,7 @@
     <div class="three-columns">
       <% @properties.each do |property| %>
         <div class="card h-100 property-card">
-          <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
+           <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
           <div class="card-body">
           <h5 class="card-title">
              <%= link_to property.title, property_path(property) %>
