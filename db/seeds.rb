@@ -91,9 +91,19 @@ puts "John just made 1 booking in the flat in Paris..."
 bookingBerlin = Booking.create(
   user_id: john.id,
   property_id: berlinFlat.id,
-  start_date: Date.today,
-  end_date: Date.today + 3.days,
+  start_date: Date.today - 3.days,
+  end_date: Date.today,
   number_of_guests: 2,
   total_price: berlinFlat.price_per_night * 3
 )
 puts "John just made another booking, this time in Berlin..."
+
+# create some reviews
+reviewBerlin = Review.create(
+  booking_id: bookingBerlin.id,
+  user_id: john.id,
+  property_id: berlinFlat.id,
+  content: "The place was wonderful, with a beautiful view and excellent service!",
+  rating: 4
+)
+puts "John made a review for his stay in Berlin"
