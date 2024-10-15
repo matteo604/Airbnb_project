@@ -8,12 +8,18 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+# image urls from unsplash
+
+
+require 'open-uri'
 
 puts 'Cleaning database...'
+Property.destroy_all
 User.destroy_all
 
+
 puts 'Creating users...'
-User.create(
+alice = User.create(
   email: 'alice.smith@example.com',
   password: 'SecurePassword123',
   password_confirmation: 'SecurePassword123',
@@ -22,9 +28,9 @@ User.create(
   address: '123 Main Street',
   telephone_number: '1234567890'
 )
-puts "Created Alice as a user..."
+puts "Created Alice as a user!"
 
-User.create(
+john = User.create(
   email: 'john.doe@example.com',
   password: 'AnotherSecurePassword123',
   password_confirmation: 'AnotherSecurePassword123',
@@ -33,4 +39,38 @@ User.create(
   address: '13 Somewhere Street',
   telephone_number: '1234567820'
 )
-puts "Created John as a user..."
+puts "Created John as a user!"
+
+puts "Creating 3 properties which will be owned by Alice..."
+parisFlat = Property.create(
+  user_id: alice.id,
+  price_per_night: 60.00,
+  title: 'Cozy flat in Paris',
+  description: 'A lovely place to stay with beautiful views.',
+  location: '123 rue du loup, Paris',
+  max_guests: 2,
+  property_type: 'flat'
+)
+
+berlinFlat = Property.create(
+  user_id: alice.id,
+  price_per_night: 60.00,
+  title: 'Beautiful Berlin townhouse',
+  description: 'Super central close to all the high street shops.',
+  location: '54 Mailinger Strasse, Berlin',
+  max_guests: 2,
+  property_type: 'flat'
+)
+
+LondonFlat = Property.create(
+  user_id: alice.id,
+  price_per_night: 80.00,
+  title: 'Stunning 2 bedroom flat in London',
+  description: 'A comfortable 2 bedroom flat in heart of London.',
+  location: '10 Park Avenue, London',
+  max_guests: 2,
+  property_type: 'flat'
+)
+puts "Properties Created!"
+
+
