@@ -62,6 +62,7 @@ parisFlat.photo.attach(
 )
 
 
+
 berlinFlat = Property.create(
   user_id: alice.id,
   price_per_night: 65.00,
