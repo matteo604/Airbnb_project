@@ -14,10 +14,13 @@
 require 'open-uri'
 
 puts 'Cleaning database...'
+
+Booking.destroy_all
 Property.destroy_all
 User.destroy_all
 
 
+# create 2 users
 puts 'Creating users...'
 alice = User.create(
   email: 'alice.smith@example.com',
@@ -41,6 +44,7 @@ john = User.create(
 )
 puts "Created John as a user!"
 
+# Create 3 properties
 puts "Creating 3 properties which will be owned by Alice..."
 parisFlat = Property.create(
   user_id: alice.id,
@@ -54,7 +58,7 @@ parisFlat = Property.create(
 
 berlinFlat = Property.create(
   user_id: alice.id,
-  price_per_night: 60.00,
+  price_per_night: 65.00,
   title: 'Beautiful Berlin townhouse',
   description: 'Super central close to all the high street shops.',
   location: '54 Mailinger Strasse, Berlin',
@@ -73,4 +77,23 @@ LondonFlat = Property.create(
 )
 puts "Properties Created!"
 
+# Create Bookings
+bookingParis = Booking.create(
+  user_id: john.id,
+  property_id: parisFlat.id,
+  start_date: Date.today,
+  end_date: Date.today + 7.days,
+  number_of_guests: 2,
+  total_price: parisFlat.price_per_night * 7
+)
+puts "John just made 1 booking in the flat in Paris..."
 
+bookingBerlin = Booking.create(
+  user_id: john.id,
+  property_id: berlinFlat.id,
+  start_date: Date.today,
+  end_date: Date.today + 3.days,
+  number_of_guests: 2,
+  total_price: berlinFlat.price_per_night * 3
+)
+puts "John just made another booking, this time in Berlin..."

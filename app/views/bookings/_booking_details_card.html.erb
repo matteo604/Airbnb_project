@@ -1,26 +1,30 @@
-<div class="d-flex justify-content-between border border-dark rounded p-3 property-card">
+<div class="d-flex justify-content-between border border-dark p-3 mb-4">
+
   <div class="d-flex">
     <div class="card h-100 property-card">
-      <%= image_tag 'parisien-flat.png', class: "card-img-top", alt: "..." %>
+      <%# <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
       <div class="card-body">
-        <p class="card-text">3 bedroom flat in the heart of Paris</p>
+        <h5 class="card-title">
+          <%= link_to booking.property.title, property_path(booking.property) %>
+        </h5>
+        <p class="card-text"><%= booking.property.description %></p>
+        <p class="price align-self-end"><strong><%= booking.property.price_per_night %>$</strong></p>
       </div>
     </div>
   </div>
 
   <div class="d-flex">
-    <div class="card h-100 property-card p-4">
-      <h3 class="text-center pb-3">Booking Details</h3>
-      <ul class="fs-4">
-        <li>Booking Date : <%= booking.created_at.strftime('%B %d, %Y') %></li>
-        <li>Check-in Date : <%= booking.start_date.strftime('%B %d, %Y') %></li>
-        <li>Check-out Date : <%= booking.end_date.strftime('%B %d, %Y') %></li>
-        <li>Number of guests : <%= booking.number_of_guests %></li>
-        <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
-      </ul>
-
-      <h3 class="text-center pt-4">This booking has passed</h3>
-
-    </div>
+    <%= link_to booking_path(booking), class: "text-decoration-none" do %>
+      <div class="card h-100 property-card p-4 ">
+        <h3 class="text-center pb-3">Booking Details</h3>
+        <ul class="fs-4">
+          <li>Booking Date : <%= booking.created_at.strftime('%B %d, %Y') %></li>
+          <li>Check-in Date : <%= booking.start_date.strftime('%B %d, %Y') %></li>
+          <li>Check-out Date : <%= booking.end_date.strftime('%B %d, %Y') %></li>
+          <li>Number of guests : <%= booking.number_of_guests %></li>
+          <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
+        </ul>
+      </div>
+    <% end %>
   </div>
 </div>
