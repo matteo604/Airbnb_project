@@ -8,7 +8,7 @@
           <h5 class="card-title"><%= @property.title %></h5>
           <p class="card-text"><%= @property.description %></p>
           <p class="card-text"><strong>Location:</strong> <%= @property.location %></p>
-          <p class="card-text"><strong>Price per Night:</strong> <%= number_to_currency(@property.price_per_night) %></p>
+          <p class="card-text"><strong>Price per Night:</strong>  <%= @property.price_per_night % 1 == 0 ? @property.price_per_night.to_i : sprintf('%.2f', @property.price_per_night) %>$</p>
           <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
           <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
         </div>

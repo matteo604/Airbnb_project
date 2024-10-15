@@ -51,8 +51,13 @@
           <h5 class="card-title">
              <%= link_to property.title, property_path(property) %>
           </h5>
-           <p class="card-text"><%= property.description %></p>
-           <p class="price align-self-end"><strong><%= property.price_per_night %>$</strong></p>
+          <p class="card-text"><%= property.description %></p>
+          <p class="price align-self-end">
+            <strong>
+              <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>$
+            </strong>
+          </p>
+
           </div>
         </div>
       <% end %>
