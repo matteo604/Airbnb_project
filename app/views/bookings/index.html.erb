@@ -1,0 +1,12 @@
+<h2 class="text-center mt-3"> Here are all your bookings</h2>
+  <div class="container mt-4">
+
+    <div class="one_column">
+
+      <% @bookings.each do |booking| %>
+        <%= render partial: "booking_details_card", locals: { booking: booking }  %>
+      <% end  %>
+
+    </div>
+  </div>
+</div>
