@@ -55,6 +55,12 @@ parisFlat = Property.create(
   max_guests: 2,
   property_type: 'flat'
 )
+parisFlat.photo.attach(
+  io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
+  filename: "367058212.jpg",
+  content_type: "image/jpg"
+)
+
 
 berlinFlat = Property.create(
   user_id: alice.id,
@@ -66,7 +72,13 @@ berlinFlat = Property.create(
   property_type: 'flat'
 )
 
-LondonFlat = Property.create(
+berlinFlat.photo.attach(
+  io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
+  filename: "367058212.jpg",
+  content_type: "image/jpg"
+)
+
+londonFlat = Property.create(
   user_id: alice.id,
   price_per_night: 80.00,
   title: 'Stunning 2 bedroom flat in London',
@@ -75,6 +87,13 @@ LondonFlat = Property.create(
   max_guests: 2,
   property_type: 'flat'
 )
+
+londonFlat.photo.attach(
+  io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
+  filename: "367058212.jpg",
+  content_type: "image/jpg"
+)
+
 puts "Properties Created!"
 
 # Create Bookings
