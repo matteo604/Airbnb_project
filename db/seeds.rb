@@ -8,3 +8,29 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+
+puts 'Cleaning database...'
+User.destroy_all
+
+puts 'Creating users...'
+User.create(
+  email: 'alice.smith@example.com',
+  password: 'SecurePassword123',
+  password_confirmation: 'SecurePassword123',
+  first_name: 'Alice',
+  last_name: 'Smith',
+  address: '123 Main Street',
+  telephone_number: '1234567890'
+)
+puts "Created Alice as a user..."
+
+User.create(
+  email: 'john.doe@example.com',
+  password: 'AnotherSecurePassword123',
+  password_confirmation: 'AnotherSecurePassword123',
+  first_name: 'John',
+  last_name: 'Doe',
+  address: '13 Somewhere Street',
+  telephone_number: '1234567820'
+)
+puts "Created John as a user..."
