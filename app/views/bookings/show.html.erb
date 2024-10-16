@@ -5,18 +5,18 @@
     </div>
   </div>
 
+  <% if @booking.end_date < Date.today %>
+    <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review,  local: true) do |form| %>
+    <%= form.label :content, 'Review Content' %>
+    <%= form.text_area :content %>
 
+    <%= form.label :rating, 'Rating' %>
+    <%= form.number_field :rating %>
 
-  <%= form_with model: @review do |form| %>
-    <div>
-      <%= form.label :content %>
-      <%= form.text_field :content %>
-    </div>
-    <div>
-      <%= form.label :rating %>
-      <%= form.number_field :rating %>
-    </div>
-    <%= form.submit %>
+    <%= form.submit 'Submit Review' %>
+    <% end %>
+  <% else %>
+    <h2>You cant review this property yet</h2>
   <% end %>
 
 </div>
