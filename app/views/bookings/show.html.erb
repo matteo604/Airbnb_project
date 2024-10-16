@@ -1,0 +1,22 @@
+<h2 class="text-center mt-3"> Here is your booking</h2>
+  <div class="container mt-4">
+    <div class="one_column">
+      <%= render partial: "booking_details_card", locals: { booking: @booking }  %>
+    </div>
+  </div>
+
+
+
+  <%= form_with model: @review do |form| %>
+    <div>
+      <%= form.label :content %>
+      <%= form.text_field :content %>
+    </div>
+    <div>
+      <%= form.label :rating %>
+      <%= form.number_field :rating %>
+    </div>
+    <%= form.submit %>
+  <% end %>
+
+</div>
