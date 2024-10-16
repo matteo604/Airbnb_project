@@ -60,7 +60,7 @@
                <div class="d-flex align-items-center justify-content-between">
                   <%= link_to property.title, property_path(property) %>
                   <% if total_reviews > 0 %>
-                    <p class="card-text"><strong></strong> <%= "⭐" * average_rating.round %> (<%= average_rating.round(2) %>)</p>
+                    <p class="card-text">⭐(<%= average_rating.round(2) %>)</p>
                   <% end %>
                </div>
             </h5>
