@@ -12,7 +12,7 @@
           <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
           <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
         </div>
-        <div class="card-footer">
+        <div class="card-footer align-item:start">
           <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary" %>
           <%= link_to 'Back', properties_path, class: "btn btn-secondary" %>
         </div>
