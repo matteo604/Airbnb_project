@@ -100,8 +100,8 @@ puts "Properties Created!"
 bookingParis = Booking.create(
   user_id: john.id,
   property_id: parisFlat.id,
-  start_date: Date.today,
-  end_date: Date.today + 7.days,
+  start_date: Date.today - 1,
+  end_date: Date.today - 1,
   number_of_guests: 2,
   total_price: parisFlat.price_per_night * 7
 )

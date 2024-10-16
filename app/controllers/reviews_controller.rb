@@ -1,21 +1,19 @@
 class ReviewsController < ApplicationController
   def create
-    @property = Property.find(params[:property_id])
-    @booking = @property.bookings.find(params[:booking_id])
 
-    if @booking.end_date < Date.today
-      @review = @booking.reviews.new(review_params)
-      @review.property = @property
-      @review.user = current_user
+    # @property = Property.find(params[:property_id])
+    @booking = Booking.find(params[:booking_id])
 
-      if @review.save
-        redirect_to @property, notice: 'Review was successfully created.'
-      else
-        render 'properties/show'
-      end
+    @review = @booking.build_review(review_params)
+    # @review.property = @property
+    # @review.user = current_user
+
+    if @review.save
+      redirect_to booking_path(@booking), notice: 'Review was successfully created.'
     else
-      redirect_to @property, alert: 'You cannot leave a review before the booking has ended.'
+      render 'bookings/show', status: :unprocessable_entity
     end
+
   end
 
   def destroy
@@ -32,6 +30,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:content, :rating)
+    params.require(:review).permit(:content, :rating).merge(user_id: current_user.id, property_id: @booking.property_id)
   end
 end

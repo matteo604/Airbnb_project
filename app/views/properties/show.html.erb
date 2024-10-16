@@ -62,8 +62,8 @@
             <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
           </div>
           <div class="search-input px-3">
-          <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
-          <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
+            <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
+            <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
           </div>
         </div>
         <div class="form-group mt-4 align-text: end">
