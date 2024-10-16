@@ -15,13 +15,16 @@
             <%= link_to "Home", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Add a new property', new_property_path, class: 'btn btn-secondary' %>
+            <%= link_to new_property_path, class: 'btn btn-light rounded-pill d-flex align-items-center p-3 border border-info me-4' do %>
+              <i class="fas fa-plus me-2"></i> <!-- ffont Awesome Icon für "Add" -->
+              Add a new property
+            <% end %>
           </li>
         <% end %>
       </ul>
 
       <div class="d-flex align-items-center">
-        <!-- Menü und Profil Button -->
+        <!-- menu and profil button -->
         <div class="btn-group">
           <button type="button" class="btn btn-light rounded-pill d-flex align-items-center p-3 border border-info" style="height: 60px;" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-bars me-4"></i>
