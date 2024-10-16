@@ -9,7 +9,9 @@
   <div class="col-md-8 offset-md-2">
 
     <h3 class="text-center mb-4 mt-4">Write a review</h3>
-    <% if @booking.end_date < Date.today %>
+
+    <% if @booking.review.nil? %>
+
       <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
 
         <div class="form-group mb-2">
@@ -26,12 +28,17 @@
           <%= form.submit 'Submit Review', class: 'btn btn-primary mb-2' %> <!-- Centered submit button -->
         </div>
       <% end %>
-    <% else %>
+
+    <% elsif @booking.end_date < Date.today %>
+
       <h2 class="text-center">You can't review this property yet</h2> <!-- Centered text when review is not allowed -->
+
+    <% else %>
+
+      <%= render partial: "review_card", locals: { review: @review }  %>
+
     <% end %>
 
 
   <div>
-
-
 </div>
