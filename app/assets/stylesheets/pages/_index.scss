@@ -36,7 +36,8 @@
 
 .price {
   font-size: 1.2rem;
-  color: #000;
+  font-weight: bold;
+  color: #000000c2;
   text-align: right;
 }
 .card-title a {
@@ -54,9 +55,9 @@
 
 .card-footer {
   display: flex;
-  align-items: center; /* Vertikale Zentrierung */
-  justify-content: flex-end; /* Preis rechtsbündig */
-  height: 10%; /* Stellt sicher, dass der Inhalt die volle Höhe nutzt */
+  align-items: center;
+  justify-content: flex-end;
+  height: 10%;
   background-color: white;
   border-top: none;
 }
@@ -82,18 +83,4 @@
 
 img{
   object-fit: cover;
-}
-
-.placeholder-card {
-  height: 350px; /* gleiche Höhe wie das Bild */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e0e0e0; /* ein dezentes Grau als Hintergrund */
-  color: #777; /* Farbe für den Platzhaltertext */
-  font-size: 1.2rem;
-  text-align: center;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom: 1px solid #ccc; /* Optional: um es wie einen Bildbereich abzugrenzen */
 }

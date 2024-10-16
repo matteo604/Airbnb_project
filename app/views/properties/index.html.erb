@@ -47,15 +47,6 @@
     <% @properties.each do |property| %>
       <div class="col-md-4 mb-4">
         <div class="card h-100 property-card">
-          <%# Check if the property has an attached photo, before trying to display it %>
-          <% if property.photo.attached? %>
-            <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-          <% else %>
-            <div class="card-img-top placeholder-card">
-              <!-- Optionally, you can include a placeholder image or text -->
-              <p>No photo available</p>
-            </div>
-          <% end %>
           <div class="card-body">
             <h5 class="card-title">
               <%= link_to property.title, property_path(property) %>
@@ -63,7 +54,7 @@
             <p class="card-text"><%= property.description %></p>
           </div>
 
-          <div class="card-footer mt-auto"> <!-- Neuer Div für den Preis -->
+          <div class="card-footer mt-auto"> <!-- new div for the price -->
             <p class="price text-end">
               <strong>
                 <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>&nbsp;$

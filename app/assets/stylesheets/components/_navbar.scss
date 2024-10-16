@@ -15,7 +15,7 @@
   color: white;
 }
 
-/* styling for the dropdown menu */
+/* stYling for the dropdown menu */
 .dropdown-menu {
   background-color: white; /* sets background color for the dropdown */
   border-radius: 12px; /* adds rounded corners to the dropdown */
@@ -25,8 +25,8 @@
 
 /* styling for the dropdown links */
 .dropdown-item {
-  color: #333; /* default text color for the links */
-  padding: 10px 20px; /* adds padding to the dropdown links */
+  color: #333; /* default texz color for the links */
+  padding: 10px 20px; /* add padding to the dropdown links */
   transition: background-color 0.3s ease, color 0.3s ease; /* smooth transition effect for background and text color */
 }
 
@@ -34,5 +34,5 @@
 .dropdown-item:hover {
   background-color: rgba(255, 56, 92, 0.9); /* darker background when hovering over a link */
   color: white; /* text color changes to white on hover */
-  border-radius: 6px; /* adds slightly rounded corners to the link on hover */
+  border-radius: 6px; /* adds slightly rounded corners to the link on hoover */
 }
