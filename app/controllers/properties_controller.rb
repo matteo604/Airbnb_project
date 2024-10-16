@@ -20,7 +20,8 @@ class PropertiesController < ApplicationController
   end
 
   def show
-    @property = Property.find(params[:id])
+      @property = Property.find(params[:id])
+      @markers = [{lat: @property.latitude, lng: @property.longitude}]
   end
 
   def create
@@ -55,5 +56,4 @@ class PropertiesController < ApplicationController
   def property_params
     params.require(:property).permit(:price_per_night, :title, :description, :location, :max_guests, :property_type, :photo)
   end
-
 end
