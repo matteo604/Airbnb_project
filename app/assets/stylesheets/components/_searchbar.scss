@@ -7,6 +7,7 @@
   background: #ffffff;
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2);
   border-radius: 50px;
+  margin-top: -120px;
 }
 
 .search-input {
@@ -27,8 +28,11 @@
   box-shadow: none;
 }
 
-.search-input input:focus {
+.search-input input:focus,
+.search-input select:focus {
   outline: none;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 56, 92, 0.5);
 }
 
 .search-btn {

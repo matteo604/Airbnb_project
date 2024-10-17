@@ -1,6 +1,7 @@
 @import "home";
 
 .property-card {
+  background-color: white;
   margin-bottom: 20px;
   border-radius: 15px;
   overflow: hidden;
@@ -35,7 +36,8 @@
 
 .price {
   font-size: 1.2rem;
-  color: #000;
+  font-weight: bold;
+  color: #000000c2;
   text-align: right;
 }
 .card-title a {
@@ -49,6 +51,15 @@
 
 .card img{
   height: 350px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 10%;
+  background-color: white;
+  border-top: none;
 }
 
 .booking-form {

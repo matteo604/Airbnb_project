@@ -1,30 +1,45 @@
 <h1 class="text-center"><%= @property.title %></h1>
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-6">
       <div class="card">
         <img src="<%= cl_image_path(@property.photo.key) %>" class="card-img-top" alt="<%= @property.title %>">
         <div class="card-body">
           <h5 class="card-title"><%= @property.title %></h5>
+          <% total_reviews = @property.reviews.count %>
+          <% total_rating = @property.reviews.sum(:rating) %>
+          <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
           <p class="card-text"><%= @property.description %></p>
           <p class="card-text"><strong>Location:</strong> <%= @property.location %></p>
-          <p class="card-text"><strong>Price per Night:</strong>  <%= @property.price_per_night % 1 == 0 ? @property.price_per_night.to_i : sprintf('%.2f', @property.price_per_night) %>$</p>
-          <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
-          <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
-        </div>
-        <div class="card-footer">
+            <p class="card-text"><strong>Price per Night:</strong>  <%= @property.price_per_night % 1 == 0 ? @property.price_per_night.to_i : sprintf('%.2f', @property.price_per_night) %>$</p>
+            <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
+            <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
+            <% if total_reviews > 0 %>
+              <p class="card-text"><strong>Rating:</strong> <%= "⭐" * average_rating.round %> (<%= average_rating.round(2) %>)</p>
+            <% else %>
+              <p>No reviews yet.</p>
+            <% end %>
+          </div>
+          <div class="card-footer">
           <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary" %>
           <%= link_to 'Back', properties_path, class: "btn btn-secondary" %>
         </div>
       </div>
-
+      </div>
+      <div class="col-6">
+        <div style="width: 100%; height: 100%;"
+           data-controller="map"
+           data-map-markers-value="<%= @markers.to_json %>"
+           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
+      </div>
+    <div class="col-md-6 offset-md-2">
       <% if @property.user == current_user %>
-        <div class="container mt-5">
-          <h3 class="mb-4">Future Bookings</h3>
+        <div class="container mt-7">
+          <div class="mb-4 text-center"><h3>Future Bookings</h3>
           <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
-
           <% if future_bookings.any? %>
-            <table class="table table-bordered">
+            <table class="table table-bordered mt-5">
               <thead>
                 <tr>
                   <th>Start Date</th>
@@ -48,7 +63,6 @@
             <p>No future bookings.</p>
           <% end %>
         </div>
-
       <% else %>
         <h3 class="text-center mb-4 mt-4">Make a Booking</h3>
         <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
@@ -62,14 +76,29 @@
             <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
           </div>
           <div class="search-input px-3">
-          <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
-          <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
+            <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
+            <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
           </div>
         </div>
         <div class="form-group mt-4 align-text: end">
           <%= form.submit 'Confirm', class: 'btn btn-primary btn-block' %>
         </div>
       <% end %>
+      <% end %>
+      <h2 class="text-center mt-5">Reviews</h2>
+      <% if @property.reviews.any? %>
+        <% @property.reviews.each do |review| %>
+          <div class="review mb-3">
+            <p class="mb-1">
+              <strong>Review:</strong> <%= review.content %>
+            </p>
+            <p class="mb-0 text-warning">
+             <strong>Rating:</strong> <%= "⭐" * review.rating %>
+            </p>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-muted text-center">No reviews yet.</p>
       <% end %>
     </div>
   </div>

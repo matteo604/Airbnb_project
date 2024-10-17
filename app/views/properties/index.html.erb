@@ -1,4 +1,4 @@
-  <div class="homepage_banner d-flex justify-content-center align-items-center">
+<div class="homepage_banner d-flex justify-content-center align-items-center">
   <div class="">
     <div class="search-bar-container d-flex justify-content-center align-items-center mt-5">
       <div class="search-bar p-3 d-flex align-items-center rounded-pill">
@@ -19,7 +19,7 @@
             </div>
             <div class="search-input px-3">
               <label for="who">Number of guests</label>
-              <!-- dropdown for nmber of guests -->
+              <!-- dropdown for number of guests -->
               <select id="who" name="who" class="form-control white-border-dropdown">
                 <option value="">Add guests</option>
                 <% (1..10).each do |i| %>
@@ -37,36 +37,44 @@
       </div>
     </div>
     <div class="col-md-12 text-center">
-      </div>
+    </div>
   </div>
-  </div>
+</div>
+
 <div class="container mt-4">
   <h2 class="text-center mt-4 mb-4"> All the properties</h2>
   <div class="row">
     <% @properties.each do |property| %>
       <div class="col-md-4 mb-4">
         <div class="card h-100 property-card">
-<<<<<<< HEAD
-          <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-=======
          <% if property.photo.attached? %>
            <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
            <% else %>
             <p> No photo </p>
           <% end %>
-
->>>>>>> master
+          <% total_reviews = property.reviews.count %>
+          <% total_rating = property.reviews.sum(:rating) %>
+          <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
           <div class="card-body">
             <h5 class="card-title">
-              <%= link_to property.title, property_path(property) %>
+               <div class="d-flex align-items-center justify-content-between">
+                  <%= link_to property.title, property_path(property) %>
+                  <% if total_reviews > 0 %>
+                    <p class="card-text">⭐(<%= average_rating.round(2) %>)</p>
+                  <% end %>
+               </div>
             </h5>
             <p class="card-text"><%= property.description %></p>
-            <p class="price align-self-end">
+          </div>
+
+          <div class="card-footer mt-auto"> <!-- new div for the price -->
+            <p class="price text-end">
               <strong>
-                <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>$
+                <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>&nbsp;$
               </strong>
             </p>
           </div>
+
         </div>
       </div>
     <% end %>

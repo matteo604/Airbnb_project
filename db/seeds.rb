@@ -51,12 +51,12 @@ parisFlat = Property.create(
   price_per_night: 60.00,
   title: 'Cozy flat in Paris',
   description: 'A lovely place to stay with beautiful views.',
-  location: '123 rue du loup, Paris',
+  location: '2 Rue Crozatier, Paris',
   max_guests: 2,
   property_type: 'flat'
 )
 parisFlat.photo.attach(
-  io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
+  io: File.open(Rails.root.join("app", "assets", "images", "b-b-hotel-milano-city.jpg")),
   filename: "367058212.jpg",
   content_type: "image/jpg"
 )
@@ -68,7 +68,7 @@ berlinFlat = Property.create(
   price_per_night: 65.00,
   title: 'Beautiful Berlin townhouse',
   description: 'Super central close to all the high street shops.',
-  location: '54 Mailinger Strasse, Berlin',
+  location: '12 Hauptstrasse, Berlin',
   max_guests: 2,
   property_type: 'flat'
 )
@@ -84,13 +84,13 @@ londonFlat = Property.create(
   price_per_night: 80.00,
   title: 'Stunning 2 bedroom flat in London',
   description: 'A comfortable 2 bedroom flat in heart of London.',
-  location: '10 Park Avenue, London',
+  location: '10 King William St, London',
   max_guests: 2,
   property_type: 'flat'
 )
 
 londonFlat.photo.attach(
-  io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
+  io: File.open(Rails.root.join("app", "assets", "images", "amsterdam.jpg")),
   filename: "367058212.jpg",
   content_type: "image/jpg"
 )
@@ -101,8 +101,8 @@ puts "Properties Created!"
 bookingParis = Booking.create(
   user_id: john.id,
   property_id: parisFlat.id,
-  start_date: Date.today,
-  end_date: Date.today + 7.days,
+  start_date: Date.today - 1,
+  end_date: Date.today - 1,
   number_of_guests: 2,
   total_price: parisFlat.price_per_night * 7
 )
@@ -127,3 +127,12 @@ reviewBerlin = Review.create(
   rating: 4
 )
 puts "John made a review for his stay in Berlin"
+
+reviewParis = Review.create(
+  booking_id: bookingParis.id,
+  user_id: john.id,
+  property_id: berlinFlat.id,
+  content: "The place was wonderful, with a beautiful view and excellent service!",
+  rating: 4
+)
+puts "Completed"
