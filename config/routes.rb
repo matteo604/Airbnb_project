@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :bookings, only: [:new, :create]  # Bookings can be created under properties
     collection do
       get :search  # Adding search route for properties
+      get :suggestions  # Route for AJAX suggestions
     end
   end
 

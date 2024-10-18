@@ -6,10 +6,15 @@
 // External libraries
 @import "bootstrap";
 @import "font-awesome";
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
+
 
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
 @import "auth_forms";
 @import "components/searchbar";
-@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
+
+
+// test for css problem below
+// body { background-color: red; }
