@@ -36,7 +36,7 @@
     <div class="col-md-6 offset-md-2">
       <% if @property.user == current_user %>
         <div class="container mt-7">
-          <div class="mb-4 text-center"><h3>Future Bookings</h3>
+          <div class="mb-4 mt-4 text-center"><h3>Future Bookings</h3>
           <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
           <% if future_bookings.any? %>
             <table class="table table-bordered mt-5">
@@ -60,7 +60,7 @@
               </tbody>
             </table>
           <% else %>
-            <p>No future bookings.</p>
+            <p class="mt-3">No future bookings.</p>
           <% end %>
         </div>
       <% else %>

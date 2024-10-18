@@ -15,6 +15,6 @@
 @import "auth_forms";
 @import "components/searchbar";
 
+@import url("https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css");
+@import url("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css");
 
-// test for css problem below
-// body { background-color: red; }
