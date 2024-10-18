@@ -85,21 +85,14 @@
         </div>
       <% end %>
       <% end %>
-      <h2 class="text-center mt-5">Reviews</h2>
-      <% if @property.reviews.any? %>
-        <% @property.reviews.each do |review| %>
-          <div class="review mb-3">
-            <p class="mb-1">
-              <strong>Review:</strong> <%= review.content %>
-            </p>
-            <p class="mb-0 text-warning">
-             <strong>Rating:</strong> <%= "⭐" * review.rating %>
-            </p>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="text-muted text-center">No reviews yet.</p>
+     <h2 class="text-center mt-5">Reviews</h2>
+     <% if @property.reviews.any? %>
+      <% @property.reviews.each do |review| %>
+      <%= render partial: 'bookings/review_card', locals: { review: review } %>
       <% end %>
+     <% else %>
+      <p class="text-muted text-center">No reviews yet.</p>
+    <% end %>
     </div>
   </div>
 </div>
