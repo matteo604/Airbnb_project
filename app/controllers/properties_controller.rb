@@ -8,19 +8,28 @@ class PropertiesController < ApplicationController
   end
 
   def search
+    @properties = Property.all # initialize properties with all records
+
     if params[:query].present?
-      @properties = Property.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
-      if @properties.empty?
-       flash[:alert] = "Please type the correct location or title."
-      end
-    else
-      @properties = Property.all
+      # search properties by title or location
+      @properties = @properties.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     end
+
+    if params[:who].present?
+      # filter properties by the number of guests (max_guests >= selected number)
+      @properties = @properties.where("max_guests >= ?", params[:who].to_i)
+    end
+
+    if @properties.empty?
+      flash[:alert] = "No properties found matching your criteria."
+    end
+
     render :index
   end
 
   def show
-    @property = Property.find(params[:id])
+      @property = Property.find(params[:id])
+      @markers = [{lat: @property.latitude, lng: @property.longitude}]
   end
 
   def create
@@ -55,5 +64,4 @@ class PropertiesController < ApplicationController
   def property_params
     params.require(:property).permit(:price_per_night, :title, :description, :location, :max_guests, :property_type, :photo)
   end
-
 end

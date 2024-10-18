@@ -52,9 +52,17 @@
            <% else %>
             <p> No photo </p>
           <% end %>
+          <% total_reviews = property.reviews.count %>
+          <% total_rating = property.reviews.sum(:rating) %>
+          <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
           <div class="card-body">
             <h5 class="card-title">
-              <%= link_to property.title, property_path(property) %>
+               <div class="d-flex align-items-center justify-content-between">
+                  <%= link_to property.title, property_path(property) %>
+                  <% if total_reviews > 0 %>
+                    <p class="card-text">⭐(<%= average_rating.round(2) %>)</p>
+                  <% end %>
+               </div>
             </h5>
             <p class="card-text"><%= property.description %></p>
           </div>
