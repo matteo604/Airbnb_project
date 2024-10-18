@@ -59,6 +59,16 @@ class PropertiesController < ApplicationController
     end
   end
 
+  # new action for ajax-suggestions
+  def suggestions
+    if params[:query].present?
+      suggestions = Property.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+      render json: suggestions.map { |property| { title: property.title, location: property.location } }
+    else
+      render json: []
+    end
+  end
+
   private
 
   def property_params

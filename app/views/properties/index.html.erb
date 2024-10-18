@@ -7,7 +7,8 @@
           <div class="input-group">
             <div class="search-input px-3">
               <label for="query">Where</label>
-              <input type="text" id="query" name="query" placeholder="Search destinations" class="form-control">
+              <input type="text" id="query" name="query" placeholder="Search destinations" class="form-control" data-controller="search-suggestions" data-search-suggestions-target="input">
+              <div id="suggestions-container" class="suggestions-list"></div>
             </div>
             <div class="search-input px-3">
               <label for="check-in">Check in</label>
