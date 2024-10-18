@@ -25,10 +25,6 @@ class PropertiesController < ApplicationController
       flash[:alert] = "No properties found matching your criteria."
     end
 
-    if params[:status].present?
-      @properties = @properties.where(status:params[:status])
-    end
-
     render :index
   end
 
