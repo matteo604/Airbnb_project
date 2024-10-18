@@ -6,20 +6,20 @@
 
   <div class="col-md-4 offset-md-4">
 
-    <h3 class="text-center mb-4 mt-4">Write a review</h3>
-
     <% if @booking.review.nil? %>
 
-      <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
+      <h4 class="text-center mb-4 mt-4">Write a review</h4>
 
-        <div class="border rounded-lg mb-2">
-          <%= form.label :content, 'Review Content', class: 'sr-only' %>
-          <%= form.text_area :content, class: 'form-control', placeholder: 'Review Content', rows: 5 %>
-        </div>
+      <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
 
         <div class="border solid rounded-lg mb-2">
           <%= form.label :rating, 'Rating', class: 'sr-only' %>
           <%= form.number_field :rating, class: 'form-control', placeholder: 'Rate this from 1 - 5' %>
+        </div>
+
+        <div class="border rounded-lg mb-2">
+          <%= form.label :content, 'Review Content', class: 'sr-only' %>
+          <%= form.text_area :content, class: 'form-control', placeholder: 'Tell us what you thought', rows: 5 %>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -27,7 +27,7 @@
         </div>
       <% end %>
 
-    <% elsif @booking.end_date < Date.today %>
+    <% elsif @booking.end_date > Date.today %>
       <h2 class="text-center">You can't review this property yet</h2>
     <% else %>
       <%= render partial: "review_card", locals: { review: @review }  %>
