@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
   def index
+
     @properties = Property.all
   end
 
@@ -24,12 +25,18 @@ class PropertiesController < ApplicationController
       flash[:alert] = "No properties found matching your criteria."
     end
 
+    if params[:status].present?
+      @properties = @properties.where(status:params[:status])
+    end
+
     render :index
   end
 
   def show
       @property = Property.find(params[:id])
       @markers = [{lat: @property.latitude, lng: @property.longitude}]
+      # This is a booking instance so we the booking form in the show page.
+      @booking = Booking.new
   end
 
   def create

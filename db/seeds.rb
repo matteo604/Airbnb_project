@@ -20,6 +20,7 @@ Property.destroy_all
 User.destroy_all
 
 
+
 # create 2 users
 puts 'Creating users...'
 alice = User.create(

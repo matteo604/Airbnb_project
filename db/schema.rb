@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_182137) do
     t.date "start_date"
     t.date "end_date"
     t.integer "number_of_guests"
-    t.decimal "total_price"
+    t.decimal "total_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_bookings_on_property_id"

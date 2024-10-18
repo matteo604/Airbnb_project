@@ -38,6 +38,16 @@
         <div class="container mt-7">
           <div class="mb-4 text-center"><h3>Future Bookings</h3>
           <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
+            <% if future_bookings.any? %>
+              <div class="alert alert-danger" role="alert">
+                Status:<strong> Not available </strong>
+              </div>
+            <% else %>
+              <div class="alert alert-sucess" role="alert">
+                Status:<strong> Available </strong>
+              </div>
+            <%end%>
+
           <% if future_bookings.any? %>
             <table class="table table-bordered mt-5">
               <thead>
@@ -67,6 +77,15 @@
         <h3 class="text-center mb-4 mt-4">Make a Booking</h3>
         <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
         <div class="input-group">
+          <% if @booking.errors.any? %>
+            <div class="alert alert-danger">
+              <ul>
+                <% @booking.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
           <div class="search-input px-3">
             <%= form.label :start_date, 'Check in', for: 'check-in', class: 'font-weight-bold' %>
              <%= form.text_field :start_date, id: 'check-in', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>

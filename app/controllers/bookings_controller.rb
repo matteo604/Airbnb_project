@@ -16,7 +16,7 @@ class BookingsController < ApplicationController
 
   def create
     @property = Property.find(params[:property_id])
-    @booking = @property.bookings.new(booking_params)
+    @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.property = @property
 
@@ -26,7 +26,8 @@ class BookingsController < ApplicationController
     if @booking.save
       redirect_to properties_path, notice: 'Booking was successfully created.'
     else
-      render :new
+      # Render the page where the booking form
+      render 'properties/show', status: :unprocessable_entity
     end
   end
 
