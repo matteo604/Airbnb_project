@@ -4,7 +4,8 @@ import flatpickr from "flatpickr";
 export default class extends Controller {
   connect() {
     flatpickr(this.element, {
-      dateFormat: "d-m-Y"
+      dateFormat: "d-m-Y",
+      minDate: "today" // Disabled date before today
     });
   }
 }
