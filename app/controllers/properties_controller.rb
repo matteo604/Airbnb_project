@@ -1,7 +1,14 @@
 class PropertiesController < ApplicationController
   def index
-
     @properties = Property.all
+    @markers = @properties.geocoded.map do |property|
+      {
+        lat: property.latitude,
+        lng: property.longitude,
+        info_window: render_to_string(partial: "popup", locals: {property: property}),
+        marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"
+      }
+    end
   end
 
   def new
@@ -25,12 +32,22 @@ class PropertiesController < ApplicationController
       flash[:alert] = "No properties found matching your criteria."
     end
 
+    @markers = @properties.geocoded.map do |property|
+      {
+        lat: property.latitude,
+        lng: property.longitude,
+        info_window: render_to_string(partial: "popup", locals: {property: property}),
+        marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"
+      }
+    end
+
     render :index
   end
 
   def show
       @property = Property.find(params[:id])
-      @markers = [{lat: @property.latitude, lng: @property.longitude}]
+      @markers = [{lat: @property.latitude, lng: @property.longitude,  info_window: render_to_string(partial: "popup", locals: {property: @property}),
+      marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"}]
       # This is a booking instance so we the booking form in the show page.
       @booking = Booking.new
   end
