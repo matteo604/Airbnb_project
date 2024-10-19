@@ -83,6 +83,7 @@
           </div>
         </div>
       <% else %>
+        <%if current_user %>
         <h3 class="text-center mb-4 mt-4">Book this property</h3>
         <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
         <div class="input-group fs-3 mb-4">
@@ -111,8 +112,8 @@
         <div class="form-group mt-3 align-text: end d-flex justify-content-center">
           <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
         </div>
+       <% end %>
       <% end %>
-
      <h2 class="text-center my-5">Reviews</h2>
      <% if @property.reviews.any? %>
       <% @property.reviews.each do |review| %>
