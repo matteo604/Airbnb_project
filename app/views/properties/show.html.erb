@@ -40,7 +40,7 @@
            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
     </div>
-    <div class="col-md-6 offset-md-2">
+    <div class="col-md-7 offset-md-2">
       <% if @property.user == current_user %>
         <div class="container mt-7">
           <div class="mb-4 mt-4 text-center">
@@ -112,21 +112,15 @@
           <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
         </div>
       <% end %>
-      <h2 class="text-center mt-5">Reviews</h2>
-      <% if @property.reviews.any? %>
-        <% @property.reviews.each do |review| %>
-          <%= render partial: 'bookings/review_card', locals: { review: review } %>
-        <% end %>
-      <% else %>
-        <p class="text-muted text-center">No reviews yet.</p>
-      <% end %>
+
      <h2 class="text-center my-5">Reviews</h2>
      <% if @property.reviews.any? %>
       <% @property.reviews.each do |review| %>
         <%= render partial: 'bookings/review_card', locals: { review: review } %>
       <% end %>
      <% else %>
-      <p class="text-muted text-center">No reviews yet.</p>
+        <p class="text-muted text-center">No reviews yet.</p>
+      <% end %>
     <% end %>
     </div>
   </div>
