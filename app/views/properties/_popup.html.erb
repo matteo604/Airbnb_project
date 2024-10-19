@@ -1,5 +1,10 @@
 <div class="card mb-4" style="max-width: 300px; margin: auto;">
-  <img src="<%= property.photo.url %>" class="card-img-top" alt="<%= property.title %>" style="height: 70px; object-fit: cover;">
+  <% if property.photos.attached? %>
+    <img src="<%= url_for(property.photos.first) %>" class="card-img-top" alt="<%= property.title %>" style="height: 70px; object-fit: cover;">
+  <% else %>
+    <p>No photos available</p>
+  <% end %>
+
   <div class="body p-2">
     <h5 class="title">
       <a href="/properties/<%= property.id %>" class="text-decoration-none text-dark">

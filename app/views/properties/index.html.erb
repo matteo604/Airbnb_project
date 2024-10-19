@@ -42,17 +42,36 @@
 </div>
 
 <div class="container mt-4" id="my-container">
-  <h2 class="text-center mt-4 mb-4"> All the properties</h2>
+  <h2 class="text-center mt-4 mb-4">All the properties</h2>
   <div class="row">
     <div class="col-8 d-flex row">
       <% @properties.each do |property| %>
         <div class="col-md-4 mb-4">
           <div class="card h-100 property-card">
-          <% if property.photo.attached? %>
-            <%= cl_image_tag property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-            <% else %>
-              <p> No photo </p>
+          <% if property.photos.attached? %>
+          <div id="carousel-<%= property.id %>" class="carousel slide">
+            <div class="carousel-inner">
+              <% property.photos.each_with_index do |photo, index| %>
+                <div class="carousel-item <%= 'active' if index == 0 %>">
+                  <%= cl_image_tag photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
+                </div>
+              <% end %>
+            </div>
+            <% if property.photos.count > 1 %>
+            <a class="carousel-control-prev" href="#carousel-<%= property.id %>" role="button" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-<%= property.id %>" role="button" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
             <% end %>
+          </div>
+        <% else %>
+          <p>No photos</p>
+        <% end %>  <!-- end of the if statement -->
+
             <% total_reviews = property.reviews.count %>
             <% total_rating = property.reviews.sum(:rating) %>
             <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
@@ -68,7 +87,7 @@
               <p class="card-text"><%= property.description %></p>
             </div>
 
-            <div class="card-footer mt-auto"> <!-- new div for the price -->
+            <div class="card-footer mt-auto">
               <p class="price text-end">
                 <strong>
                   <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>&nbsp;$

@@ -11,18 +11,18 @@
 
 <h1 class="text-center">Edit <%=@property.title %></h1>
 <div class="container">
-  <%= simple_form_for(@property) do |f| %>
+  <%= simple_form_for(@property, html: { multipart: true }) do |f| %>
   <%= f.input :title, placeholder: @property.title %>
   <%= f.input :description, placeholder: @property.description%>
  <%= f.input :location,
-     input_html: {data: {location_autocomplete_target: "location"}, class: "d-none"},
-     wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}},
-     placeholder: @property.location
+    input_html: {data: {location_autocomplete_target: "location"}, class: "d-none"},
+    wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}},
+    placeholder: @property.location
   %>
   <%= f.input :price_per_night, as: :decimal, placeholder: @property.price_per_night%>
   <%= f.input :property_type, collection: ['Hotel', 'Flat', 'Room', 'Apartment', 'Block of flat', 'Bed and Breakfast', 'Motel'], prompt: "Select building type" %>
   <%= f.input :max_guests, as: :integer, placeholder: @property.max_guests%>
-  <%= f.input :photo, as: :file, placeholder: @property.photo%>
+  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
   <%=f.submit %> <br>
   <%=link_to 'Back', property_path(@property), class: 'btn btn-secondary mt-2' %>
 <% end %>

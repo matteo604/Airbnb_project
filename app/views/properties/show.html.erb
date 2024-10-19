@@ -3,7 +3,11 @@
   <div class="row">
     <div class="col-6">
       <div class="card">
-        <img src="<%= cl_image_path(@property.photo.key) %>" class="card-img-top" alt="<%= @property.title %>">
+        <% if @property.photos.attached? %>
+          <img src="<%= cl_image_path(@property.photos.first.key) %>" class="card-img-top" alt="<%= @property.title %>">
+        <% else %>
+          <p>No photos available</p>
+        <% end %>
         <div class="card-body">
           <h5 class="card-title"><%= @property.title %></h5>
           <% total_reviews = @property.reviews.count %>
@@ -35,9 +39,9 @@
     </div>
     <div class="col-6">
       <div style="width: 100%; height: 100%;"
-           data-controller="map"
-           data-map-markers-value="<%= @markers.to_json %>"
-           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
     </div>
     <div class="col-md-6 offset-md-2">
