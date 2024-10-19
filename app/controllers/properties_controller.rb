@@ -1,7 +1,14 @@
 class PropertiesController < ApplicationController
   def index
-
     @properties = Property.all
+    @markers = @properties.geocoded.map do |property|
+      {
+        lat: property.latitude,
+        lng: property.longitude,
+        info_window: render_to_string(partial: "popup", locals: {property: property}),
+        marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"
+      }
+    end
   end
 
   def new
@@ -23,6 +30,15 @@ class PropertiesController < ApplicationController
 
     if @properties.empty?
       flash[:alert] = "No properties found matching your criteria."
+    end
+
+    @markers = @properties.geocoded.map do |property|
+      {
+        lat: property.latitude,
+        lng: property.longitude,
+        info_window: render_to_string(partial: "popup", locals: {property: property}),
+        marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"
+      }
     end
 
     render :index
