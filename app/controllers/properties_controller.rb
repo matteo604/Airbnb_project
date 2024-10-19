@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
   def index
+
     @properties = Property.all
   end
 
@@ -28,8 +29,10 @@ class PropertiesController < ApplicationController
   end
 
   def show
-    @property = Property.find(params[:id])
-    @markers = [{lat: @property.latitude, lng: @property.longitude}]
+      @property = Property.find(params[:id])
+      @markers = [{lat: @property.latitude, lng: @property.longitude}]
+      # This is a booking instance so we the booking form in the show page.
+      @booking = Booking.new
   end
 
   def create

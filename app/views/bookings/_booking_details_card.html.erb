@@ -1,30 +1,46 @@
-<div class="d-flex justify-content-between border border-dark p-3 mb-4">
+<div class="container mt-5 mb-4">
+  <div class="row border-bottom">
 
-  <div class="d-flex">
-    <div class="card h-100 property-card">
-      <%= cl_image_tag booking.property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= link_to booking.property.title, property_path(booking.property) %>
-        </h5>
-        <p class="card-text"><%= booking.property.description %></p>
-        <p class="price align-self-end"><strong><%= booking.property.price_per_night %>$</strong></p>
-      </div>
+    <div class="col-md-3">
+      <%= link_to property_path(booking.property) do %>
+        <div class="card-deck property-card">
+          <%= cl_image_tag booking.property.photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
+        </div>
+      <% end %>
     </div>
-  </div>
 
-  <div class="d-flex">
-    <%= link_to booking_path(booking), class: "text-decoration-none" do %>
-      <div class="card h-100 property-card p-4 ">
-        <h3 class="text-center pb-3">Booking Details</h3>
-        <ul class="fs-4">
-          <li>Booking Date : <%= booking.created_at.strftime('%B %d, %Y') %></li>
-          <li>Check-in Date : <%= booking.start_date.strftime('%B %d, %Y') %></li>
-          <li>Check-out Date : <%= booking.end_date.strftime('%B %d, %Y') %></li>
-          <li>Number of guests : <%= booking.number_of_guests %></li>
-          <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
-        </ul>
+    <div class="col-md-5 d-flex flex-column">
+
+      <div class="">
+        <h3 class="fs-4"> <%= booking.property.title %></h3>
+        <p><%= booking.property.location %></p>
       </div>
-    <% end %>
+
+      <div>
+        <% dateDiff = (booking.end_date - booking.start_date).to_i %>
+        <span><%= booking.start_date.strftime(' %d %b %Y') %> - <%= booking.end_date.strftime('%d %b %Y') %> (<%= dateDiff %> nights) </span>
+      </div>
+
+
+      <div class="mt-auto mb-4">
+        <% if booking.end_date <= Date.today %>
+          <span class="text-success text-dark">This booking is complete <i class="fa-regular fa-circle-check fa-lg"></i> </span>
+        <% else %>
+          <span>This booking is coming up !</span>
+        <% end  %>
+      </div>
+
+
+    </div>
+
+    <div class="col-md-4">
+      <ul>
+        <li>Booked on : <%= booking.created_at.strftime('%d %b %Y') %></li>
+        <li>Number of guests : <%= booking.number_of_guests %></li>
+        <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
+        <p class="mt-2"><%= link_to "View Booking", booking_path(booking), class: "text-decoration-none" %></p>
+      </ul>
+
+    </div>
   </div>
 </div>

@@ -1,0 +1,20 @@
+<div class="text-center">
+
+  <% if review.rating <= 5 %>
+    <% diff = 5 - review.rating %>
+
+    <% review.rating.times do %>
+      <i class="fa-solid fa-star fa-lg"></i>
+    <% end %>
+
+    <% diff.times do %>
+      <i class="fa-regular fa-star fa-lg"></i>
+    <% end %>
+
+  <% end %>
+
+  <div class="mt-2">
+    <h5 class="fst-italic">"<%= review.content %>"</h5>
+    <p class="fst-italic">- <%= review.user.first_name %></p>
+  </div>
+</div>
