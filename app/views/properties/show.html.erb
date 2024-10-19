@@ -1,7 +1,7 @@
 <h1 class="text-center"><%= @property.title %></h1>
 <div class="container mt-5">
   <div class="row">
-    <div class="col-6">
+    <div class="col-5">
       <div class="card">
         <img src="<%= cl_image_path(@property.photo.key) %>" class="card-img-top" alt="<%= @property.title %>">
         <div class="card-body">
@@ -33,9 +33,9 @@
            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         </div>
       </div>
-    <div class="col-md-6 offset-md-2">
+    <div class="col-md-7 offset-md-3 my-3">
       <% if @property.user == current_user %>
-        <div class="container mt-7">
+        <div class="container mt-6 property-card">
           <div class="mb-4 mt-4 text-center"><h3>Future Bookings</h3>
           <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
             <% if future_bookings.any? %>
@@ -74,9 +74,9 @@
           <% end %>
         </div>
       <% else %>
-        <h3 class="text-center mb-4 mt-4">Make a Booking</h3>
+        <h3 class="text-center mb-4 mt-4">Book this property</h3>
         <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
-        <div class="input-group">
+        <div class="input-group fs-3 mb-4">
           <% if @booking.errors.any? %>
             <div class="alert alert-danger">
               <ul>
@@ -86,28 +86,28 @@
               </ul>
             </div>
           <% end %>
-          <div class="search-input px-3">
-            <%= form.label :start_date, 'Check in', for: 'check-in', class: 'font-weight-bold' %>
-             <%= form.text_field :start_date, id: 'check-in', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
+          <div class="search-input px-3 text-center">
+            <%= form.label :start_date, 'Check in', for: 'check-in', class: 'fs-6 mb-4' %>
+             <%= form.text_field :start_date, id: 'check-in', placeholder: 'Add dates', class: 'form-control text-center', data: { controller: 'datepicker' } %>
           </div>
-          <div class="search-input px-3">
-            <%= form.label :end_date, 'Check out', for: 'check-out', class: 'font-weight-bold' %>
-            <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control', data: { controller: 'datepicker' } %>
+          <div class="search-input px-3 text-center">
+            <%= form.label :end_date, 'Check out', for: 'check-out', class: 'fs-6 mb-4' %>
+            <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control text-center', data: { controller: 'datepicker' } %>
           </div>
-          <div class="search-input px-3">
-            <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'font-weight-bold' %>
-            <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown' } %>
+          <div class="search-input px-3 text-center">
+            <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'fs-6 mb-4' %>
+            <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown text-center' } %>
           </div>
         </div>
-        <div class="form-group mt-4 align-text: end">
-          <%= form.submit 'Confirm', class: 'btn btn-primary btn-block' %>
+        <div class="form-group mt-3 align-text: end d-flex justify-content-center">
+          <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
         </div>
       <% end %>
       <% end %>
-     <h2 class="text-center mt-5">Reviews</h2>
+     <h2 class="text-center my-5">Reviews</h2>
      <% if @property.reviews.any? %>
       <% @property.reviews.each do |review| %>
-      <%= render partial: 'bookings/review_card', locals: { review: review } %>
+        <%= render partial: 'bookings/review_card', locals: { review: review } %>
       <% end %>
      <% else %>
       <p class="text-muted text-center">No reviews yet.</p>
