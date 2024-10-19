@@ -1,6 +1,6 @@
 <div class="text-center">
 
-  <% if review.rating < 5 %>
+  <% if review.rating <= 5 %>
     <% diff = 5 - review.rating %>
 
     <% review.rating.times do %>
