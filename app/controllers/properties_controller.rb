@@ -46,7 +46,8 @@ class PropertiesController < ApplicationController
 
   def show
       @property = Property.find(params[:id])
-      @markers = [{lat: @property.latitude, lng: @property.longitude}]
+      @markers = [{lat: @property.latitude, lng: @property.longitude,  info_window: render_to_string(partial: "popup", locals: {property: @property}),
+      marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"}]
       # This is a booking instance so we the booking form in the show page.
       @booking = Booking.new
   end
