@@ -12,16 +12,25 @@
 .property-card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  background-color: lightgrey;
+}
+
+.property-card:hover .card-footer {
+  background-color: lightgrey;
 }
 
 .property-card .card-img-top {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   object-fit: cover;
+  height: 200px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 17px;
 }
 
 .card-title {
@@ -32,6 +41,7 @@
 .card-text {
   font-size: 1rem;
   color: #555;
+  padding: 1px;
 }
 
 .price {
@@ -83,4 +93,9 @@
 
 img{
   object-fit: cover;
+}
+
+.rating{
+  padding-left: 4px;
+  padding-top: -1;
 }
