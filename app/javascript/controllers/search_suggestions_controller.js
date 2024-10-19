@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-// connects to data-controller="search-sugestions"
+// connects to data-controller="search-suggestions"
 export default class extends Controller {
   static targets = ["input"];
 
@@ -35,9 +35,14 @@ export default class extends Controller {
     suggestions.forEach((suggestion) => {
       const suggestionItem = document.createElement('div');
       suggestionItem.classList.add('suggestion-item');
-      suggestionItem.innerHTML = `${suggestion.title} (${suggestion.location})`;
 
-      // make sugestion clickable
+      // use highlighted title and location if available
+      suggestionItem.innerHTML = `
+        ${suggestion.highlighted_title || suggestion.title}
+        (${suggestion.highlighted_location || suggestion.location})
+      `;
+
+      // make suggestion clickable
       suggestionItem.addEventListener('click', () => {
         this.inputTarget.value = suggestion.title; // insert title into input field
         this.clearSuggestions(); // clear suggestions after selection
