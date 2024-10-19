@@ -1,0 +1,12 @@
+/* Pfeile standardmäßig unsichtbar */
+.carousel-control-prev,
+.carousel-control-next {
+  visibility: hidden; /* oder opacity: 0 */
+  transition: visibility 0.2s, opacity 0.2s ease;
+}
+
+/* Pfeile sichtbar machen, wenn die Karte gehovered wird */
+.property-card:hover .carousel-control-prev,
+.property-card:hover .carousel-control-next {
+  visibility: visible; /* oder opacity: 1 */
+}

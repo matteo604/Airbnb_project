@@ -42,6 +42,13 @@
   font-size: 1rem;
   color: #555;
   padding: 1px;
+  display: -webkit-box;
+  // stylelint-disable-next-line vendor-prefixes
+  -webkit-line-clamp: 4; /* displays only four lines of text */
+  line-clamp: 4; /* displays only four lines of text */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .price {
