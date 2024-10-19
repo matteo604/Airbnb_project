@@ -79,5 +79,4 @@ group :test do
   gem "selenium-webdriver"
 end
 
-# Pg search gem
 gem 'pg_search'
