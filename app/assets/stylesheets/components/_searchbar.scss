@@ -60,22 +60,46 @@
 }
 
 .white-border-dropdown {
-  border: 1px solid white; /* white frame for dropdown*/
+  border: 3px solid white; /* white frame for dropdown*/
   color:rgba(14, 0, 0, 0.7)
 }
 
 .suggestions-list {
   border: 0px solid #ccc;
+  border-radius: 5px;
   max-height: 200px;
   overflow-y: auto;
   position: absolute;
   background-color: white;
   z-index: 1000;
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+}
+
+.close-suggestion {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-size: 18px;
+  padding: 0 8px;
+  line-height: 1;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.close-suggestion:hover {
+  color: #f10000;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .suggestion-item {
   padding: 10px;
   cursor: pointer;
+  position: relative;
+  padding-right: 40px; /* space for closing cross */
 }
 
 .suggestion-item:hover {
