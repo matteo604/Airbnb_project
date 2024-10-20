@@ -1,6 +1,5 @@
 class PropertiesController < ApplicationController
   def index
-
     @properties = Property.all
   end
 
@@ -10,7 +9,6 @@ class PropertiesController < ApplicationController
 
   def search
     @properties = Property.all # initialize properties with all records
-
     if params[:query].present?
       # search properties by title or location
       @properties = @properties.where("title ILIKE ? OR location ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
@@ -21,6 +19,12 @@ class PropertiesController < ApplicationController
       @properties = @properties.where("max_guests >= ?", params[:who].to_i)
     end
 
+    if params[:start_date].present?
+      if (start_date(booking) && end_date(booking) < start_date(search) && end_date(search) || start_date(booking) && end_date(booking) > start_date(search) && end_date(search))
+        @properties = @properties.where("date_availability >= ?", params[:status])
+      end
+    end
+
     if @properties.empty?
       flash[:alert] = "No properties found matching your criteria."
     end
@@ -29,10 +33,10 @@ class PropertiesController < ApplicationController
   end
 
   def show
-      @property = Property.find(params[:id])
-      @markers = [{lat: @property.latitude, lng: @property.longitude}]
-      # This is a booking instance so we the booking form in the show page.
-      @booking = Booking.new
+    @property = Property.find(params[:id])
+    @markers = [{lat: @property.latitude, lng: @property.longitude}]
+    # This is a booking instance so we the booking form in the show page.
+    @booking = Booking.new
   end
 
   def create
@@ -44,7 +48,6 @@ class PropertiesController < ApplicationController
      render :new
     end
   end
-
 
   def edit
     @property = Property.find(params[:id])
