@@ -31,6 +31,10 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
+# Use Active Storage with Cloudinary
+gem "cloudinary", "~> 1.24.0"
+gem 'activestorage-cloudinary-service', '~> 0.2.0'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
@@ -52,7 +56,6 @@ gem "font-awesome-sass", "~> 6.1"
 gem "simple_form", github: "heartcombo/simple_form"
 gem "sassc-rails"
 gem "ffi", "< 1.17"
-gem "cloudinary"
 
 group :development, :test do
   gem "dotenv-rails"
@@ -78,3 +81,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'pg_search'

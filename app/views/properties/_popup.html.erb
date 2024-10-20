@@ -1,0 +1,21 @@
+<div class="card mb-4" style="max-width: 300px; margin: auto;">
+  <% if property.photos.attached? %>
+    <img src="<%= url_for(property.photos.first) %>" class="card-img-top" alt="<%= property.title %>" style="height: 70px; object-fit: cover;">
+  <% else %>
+    <p>No photos available</p>
+  <% end %>
+
+  <div class="body p-2">
+    <h5 class="title">
+      <a href="/properties/<%= property.id %>" class="text-decoration-none text-dark">
+        <%= property.title %>
+      </a>
+    </h5>
+    <p class="card-text mb-1" style="font-size: 0.9em;">
+      <%= property.description %>
+    </p>
+    <p class="card-text mb-1" style="font-size: 0.9em;">
+      <strong>Price:</strong> <%= number_to_currency(property.price_per_night) %>
+    </p>
+  </div>
+</div>
