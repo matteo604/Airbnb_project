@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Properties</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
 <div class="homepage_banner d-flex justify-content-center align-items-center">
   <div class="">
     <div class="search-bar-container d-flex justify-content-center align-items-center mt-5">
@@ -7,7 +16,6 @@
             <div class="search-input px-3">
               <label for="query">Where</label>
               <input type="text" id="query" name="query" placeholder="Search destinations" class="form-control" data-controller="search-suggestions" data-search-suggestions-target="input">
-              <div id="suggestions-container" class="suggestions-list"></div>
             </div>
             <div class="search-input px-3">
               <label for="check-in">Check in</label>
@@ -19,7 +27,6 @@
             </div>
             <div class="search-input px-3">
               <label for="who">Number of guests</label>
-              <!-- dropdown for number of guests -->
               <select id="who" name="who" class="form-control white-border-dropdown">
                 <option value="">Add guests</option>
                 <% (1..10).each do |i| %>
@@ -91,8 +98,12 @@
               <p class="card-text"><%= property.description %></p>
             </div>
 
-            <div class="card-footer mt-auto">
-              <p class="price text-end">
+            <div class="card-footer mt-auto d-flex justify-content-between">
+              <p class="text-left">
+                <i class="fas fa-users guest-icon"></i>
+                <span class="max-guests-text"> max. <%= property.max_guests %></span>
+              </p>
+              <p class="price text-right">
                 <strong>
                   <%= property.price_per_night % 1 == 0 ? property.price_per_night.to_i : sprintf('%.2f', property.price_per_night) %>&nbsp;$
                 </strong>
@@ -112,5 +123,6 @@
     </div>
   </div>
 </div>
+<%= render "shared/footer" %></body>
+</html>
 
-<%= render "shared/footer" %>
