@@ -56,7 +56,7 @@ parisFlat = Property.create(
   max_guests: 2,
   property_type: 'flat'
 )
-parisFlat.photo.attach(
+parisFlat.photos.attach(
   io: File.open(Rails.root.join("app", "assets", "images", "b-b-hotel-milano-city.jpg")),
   filename: "367058212.jpg",
   content_type: "image/jpg"
@@ -73,7 +73,7 @@ berlinFlat = Property.create(
   property_type: 'flat'
 )
 
-berlinFlat.photo.attach(
+berlinFlat.photos.attach(
   io: File.open(Rails.root.join("app", "assets", "images", "367058212.jpg")),
   filename: "367058212.jpg",
   content_type: "image/jpg"
@@ -89,7 +89,7 @@ londonFlat = Property.create(
   property_type: 'flat'
 )
 
-londonFlat.photo.attach(
+londonFlat.photos.attach(
   io: File.open(Rails.root.join("app", "assets", "images", "amsterdam.jpg")),
   filename: "367058212.jpg",
   content_type: "image/jpg"
