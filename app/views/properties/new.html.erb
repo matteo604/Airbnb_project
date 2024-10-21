@@ -10,21 +10,28 @@
   </div>
 <% end %>
 
-<div></div>
+<div class="container d-flex justify-content-center">
 
-<h1 class="text-center">Create a property</h1>
-<div class="container">
-<%= simple_form_for(@property, html: { multipart: true }) do |f| %>
-  <%= f.input :title %>
-  <%= f.input :description %>
-  <%= f.input :location,
-    input_html: {data: {location_autocomplete_target: "location"}, class: "d-none"},
-    wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
-  %>
-  <%= f.input :price_per_night, as: :decimal%>
-  <%= f.input :property_type, collection: ['Hotel', 'Flat', 'Room', 'Apartment', 'Block of flat', 'Bed and Breakfast', 'Motel'], prompt: "Select building type" %>
-  <%= f.input :max_guests, as: :integer%>
-  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
-  <%=f.submit %>
-<% end %>
+  <div class="m-3 property-card col-6 p-5">
+
+    <h4 class="text-center">Create a property</h4>
+
+    <%= simple_form_for(@property, html: { multipart: true }) do |f| %>
+      <%= f.input :title, input_html: { class: "form-control round_textbox" } %>
+      <%= f.input :description, input_html: { class: "form-control round_textbox", rows: 6 } %>
+      <%= f.input :location,
+        input_html: {data: {location_autocomplete_target: "location"}, class: "d-none"},
+        wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+      %>
+      <%= f.input :price_per_night, as: :decimal, input_html: { class: "form-control round_textbox" } %>
+      <%= f.input :property_type, collection: ['Hotel', 'Flat', 'Room', 'Apartment', 'Block of flat', 'Bed and Breakfast', 'Motel'], prompt: "Select building type", input_html: { class: "form-control round_textbox" }%>
+      <%= f.input :max_guests, as: :integer, input_html: { class: "form-control round_textbox" } %>
+      <%= f.input :photos, as: :file, input_html: { multiple: true, class: "form-control round_textbox"} %>
+      <div class="d-flex justify-content-center mt-4">
+        <%= f.submit class: 'btn btn-primary rounded-pill fs-5 px-4'%>
+      </div>
+
+
+    <% end %>
+  </div>
 </div>
