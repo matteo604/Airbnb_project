@@ -19,12 +19,13 @@ export default class extends Controller {
     const numberOfGuests = this.guestsTarget.value;
     const totalDays = (endDate - startDate)/(1000 * 60 * 60 * 24)
     const price_per_night = this.nightValue;
-    console.log(price_per_night);
-    if (startDate && endDate && numberOfGuests) {
+    const myDiv = document.getElementById("total-price")
+    if (!isNaN(startDate) && !isNaN(endDate) && !isNaN(numberOfGuests)) {
       const totalPrice = price_per_night * numberOfGuests * totalDays;
-      console.log(totalPrice);
-      const myDiv = document.getElementById("total-price")
+      console.log(endDate)
       myDiv.textContent = totalPrice + "$"
+    } else {
+      myDiv.textContent = "--"
     }
-  }
+ }
 }
