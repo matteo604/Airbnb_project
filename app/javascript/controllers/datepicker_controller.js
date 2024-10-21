@@ -7,15 +7,13 @@ export default class extends Controller {
     const checkOutInput = document.querySelector("#check-out");
 
     flatpickr(checkInInput, {
-      dateFormat: "d-m-Y",
+      // dateFormat: "d-m-Y",
       minDate: "today",
       onChange: (selectedDates) => {
         if (selectedDates.length > 0) {
           const startDate = selectedDates[0];
           const endDate = new Date(startDate);
           endDate.setDate(endDate.getDate() + 1);
-
-
           if (checkOutInput._flatpickr) {
             checkOutInput._flatpickr.set("minDate", endDate);
           }
@@ -24,7 +22,7 @@ export default class extends Controller {
     });
 
     flatpickr(checkOutInput, {
-      dateFormat: "d-m-Y",
+      // dateFormat: "Y-m-d",
       minDate: new Date().setDate(new Date().getDate() + 1)
     });
   }
