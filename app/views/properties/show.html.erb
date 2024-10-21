@@ -91,45 +91,48 @@
         </div>
       <% else %>
         <%if current_user %>
-        <h3 class="text-center mb-4 mt-4">Book this property</h3>
-        <%= form_with(model: @booking, url: property_bookings_path(@property),scope: :booking,  local: true, html: { class: 'booking-form' }) do |form| %>
-        <div class="input-group fs-3 mb-4">
-          <% if @booking.errors.any? %>
-            <div class="alert alert-danger">
-              <ul>
-                <% @booking.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <div class="search-input px-3 text-center">
-            <%= form.label :start_date, 'Check in', for: 'check-in', class: 'fs-6 mb-4' %>
-             <%= form.text_field :start_date, id: 'check-in', placeholder: 'Add dates', class: 'form-control text-center', data: { controller: 'datepicker' } %>
+    <h3 class="text-center mb-4 mt-4">Book this property</h3>
+    <%= form_with(model: @booking, url: property_bookings_path(@property), scope: :booking, local: true, html: { class: 'booking-form' }) do |form| %>
+      <div class="input-group fs-3 mb-4" data-controller="price" data-price-night-value="<%= @property.price_per_night %>">
+        <% if @booking.errors.any? %>
+          <div class="alert alert-danger">
+            <ul>
+              <% @booking.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
           </div>
-          <div class="search-input px-3 text-center">
-            <%= form.label :end_date, 'Check out', for: 'check-out', class: 'fs-6 mb-4' %>
-            <%= form.text_field :end_date, id: 'check-out', placeholder: 'Add dates', class: 'form-control text-center', data: { controller: 'datepicker' } %>
-          </div>
-          <div class="search-input px-3 text-center">
-            <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'fs-6 mb-4' %>
-            <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown text-center' } %>
-          </div>
+        <% end %>
+        <div class="search-input px-3 text-center">
+          <%= form.label :start_date, 'Check in', for: 'check-in', class: 'fs-6 mb-4' %>
+          <%= form.date_field :start_date, id: 'check-in', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'startDate', controller: 'datepicker' } %>
         </div>
-        <div class="form-group mt-3 align-text: end d-flex justify-content-center">
-          <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
+        <div class="search-input px-3 text-center">
+          <%= form.label :end_date, 'Check out', for: 'check-out', class: 'fs-6 mb-4' %>
+          <%= form.date_field :end_date, id: 'check-out', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'endDate', controller: 'datepicker' } %>
         </div>
-       <% end %>
-      <% end %>
-   <h2 class="text-center" style="padding-top: 60px; margin-top: 20px;">Reviews</h2>
-   <% if @property.reviews.any? %>
+        <div class="search-input px-3 text-center">
+          <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'fs-6 mb-4' %>
+          <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown text-center', data: { action: 'change->price#updatePrice', price_target: 'guests' } } %>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <h4>Total Price: <span id="total-price">--</span></h4>
+      </div>
+      <div class="form-group mt-3 align-text: end d-flex justify-content-center">
+        <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
+      </div>
+    <% end %>
+  <%end %>
+  <h2 class="text-center" style="padding-top: 60px; margin-top: 20px;">Reviews</h2>
+    <% if @property.reviews.any? %>
      <% @property.reviews.each do |review| %>
-       <div id="reviews">
-        <%= render partial: 'bookings/review_card', locals: { review: review } %>
-       </div>
+      <div id="reviews">
+      <%= render partial: 'bookings/review_card', locals: { review: review } %>
+      </div>
      <% end %>
    <% else %>
-     <p class="text-muted text-center">No reviews yet.</p>
+    <p class="text-muted text-center">No reviews yet.</p>
    <% end %>
   <% end %>
     </div>
