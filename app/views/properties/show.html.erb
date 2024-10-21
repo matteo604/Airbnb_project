@@ -22,9 +22,12 @@
           <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
           <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
           <% if total_reviews > 0 %>
-            <p class="card-text">
+          <div class="rating-section">
+            <a href="#reviews" class="card-text" style="text-decoration:none">
               <strong>Rating:</strong> <%= "⭐" * average_rating.round %> (<%= average_rating.round(2) %>)
-            </p>
+            </a>
+          </div>
+
           <% else %>
             <p>No reviews yet.</p>
           <% end %>
@@ -118,15 +121,17 @@
         </div>
        <% end %>
       <% end %>
-     <h2 class="text-center my-5">Reviews</h2>
-     <% if @property.reviews.any? %>
-      <% @property.reviews.each do |review| %>
+   <h2 class="text-center" style="padding-top: 60px; margin-top: 20px;">Reviews</h2>
+   <% if @property.reviews.any? %>
+     <% @property.reviews.each do |review| %>
+       <div id="reviews">
         <%= render partial: 'bookings/review_card', locals: { review: review } %>
-      <% end %>
-     <% else %>
-        <p class="text-muted text-center">No reviews yet.</p>
-      <% end %>
-    <% end %>
+       </div>
+     <% end %>
+   <% else %>
+     <p class="text-muted text-center">No reviews yet.</p>
+   <% end %>
+  <% end %>
     </div>
   </div>
 </div>
