@@ -1,33 +1,46 @@
-<div class="container">
+<div class="container" data-controller="rating">
   <div>
     <%= render partial: "booking_details_card", locals: { booking: @booking }  %>
   </div>
 
   <div class="col-md-4 offset-md-4">
-    <% if @booking.review.nil? %>
-      <div class="property-card p-4">
-        <h5 class="text-center">How was your stay?</h5>
-        <div class="rating">
-          <% 5.times do |index| %>
-            <i class="far fa-star fa-lg star" data-index="<%= index + 1 %>"></i>
+    <% if @booking.review.nil? %> <!-- checks if nor rating exists yet -->
+      <% if Date.today >= @booking.end_date %> <!-- checks if it is the last day of the booking time or later -->
+        <div class="property-card p-4">
+          <h5 class="text-center">How was your stay?</h5>
+          <div class="rating">
+            <% 5.times do |index| %>
+              <i class="far fa-star fa-lg star" data-index="<%= index + 1 %>" data-action="click->rating#setRating" data-rating-target="star"></i>
+            <% end %>
+          </div>
+          <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
+            <%= form.hidden_field :rating, value: 0, id: "rating-input", data: { rating_target: "ratingInput" } %>
+            <div class="mb-3">
+              <%= form.label :content, 'Review Content', class: 'sr-only' %>
+              <%= form.text_area :content, class: "form-control round_textbox", placeholder: 'Tell us what you think... (at least ten characters required)', rows: 5, id: 'review-content', data: { rating_target: "contentInput" } %>
+            </div>
+            <div class="d-flex justify-content-center">
+              <%= form.submit 'Submit Review', class: 'btn btn-primary rounded-pill', disabled: true, id: 'submit-button', data: { rating_target: "submitButton" } %>
+            </div>
           <% end %>
         </div>
-        <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
-          <%= form.hidden_field :rating, value: 1, id: "rating-input" %>
-          <div class="mb-3">
-            <%= form.label :content, 'Review Content', class: 'sr-only' %>
-            <%= form.text_area :content, class: "form-control round_textbox", placeholder: 'Tell us what you think... (at least ten characters required)', rows: 5, id: 'review-content' %>
-          </div>
-          <div class="d-flex justify-content-center">
-            <%= form.submit 'Submit Review', class: 'btn btn-primary rounded-pill', disabled: true, id: 'submit-button' %>
-          </div>
-        <% end %>
-      </div>
+      <% else %>
+        <!-- Show message that review is only possible from the last day -->
+        <div class="text-center" style="font-size: 1.7rem; padding: 20px 0; color: #333;">
+          You can only review on or after the last day of your booking!
+        </div>
+      <% end %>
     <% else %>
-      <h2 class="text-center" style="white-space: nowrap;">You can't review this property yet</h2>
+      <!-- Show the existing rating, if one exists -->
+      <div class="property-card p-4">
+        <h5 class="text-center">Your Review</h5>
+        <p><strong>Rating:</strong> <%= @booking.review.rating %> stars</p>
+        <p><strong>Review:</strong> <%= @booking.review.content %></p>
+      </div>
     <% end %>
   </div>
 </div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -36,6 +49,7 @@
     const reviewContent = document.getElementById('review-content');
     const submitButton = document.getElementById('submit-button');
 
+    // Event listener for star clicks to update rating and form validation
     stars.forEach(star => {
       star.addEventListener('click', function() {
         const index = this.getAttribute('data-index');
@@ -45,8 +59,10 @@
       });
     });
 
-    reviewContent.addEventListener('input', validateForm); // Check when content is typed
+    // Event listener for text area input to check validation
+    reviewContent.addEventListener('input', validateForm);
 
+    // Update stars based on the rating selected
     function updateStars(index) {
       stars.forEach((star, idx) => {
         if (idx < index) {
@@ -59,10 +75,14 @@
       });
     }
 
+    // Enable submit button only if a rating is selected and review content has at least 10 characters
     function validateForm() {
       const ratingSelected = parseInt(ratingInput.value, 10) > 0;
       const contentLength = reviewContent.value.trim().length >= 10;
       submitButton.disabled = !(ratingSelected && contentLength); // Enable button if both conditions are met
     }
+
+    // Manually trigger form validation on page load to ensure the button remains disabled
+    validateForm();
   });
 </script>
