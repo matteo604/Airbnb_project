@@ -1,45 +1,68 @@
 <div class="container">
-
   <div>
     <%= render partial: "booking_details_card", locals: { booking: @booking }  %>
   </div>
 
   <div class="col-md-4 offset-md-4">
-
     <% if @booking.review.nil? %>
-
       <div class="property-card p-4">
         <h5 class="text-center">How was your stay?</h5>
-        <div class="text-center m-3">
-          <% 5.times do %>
-            <i class="fa-solid fa-star fa-lg"></i>
+        <div class="rating">
+          <% 5.times do |index| %>
+            <i class="far fa-star fa-lg star" data-index="<%= index + 1 %>"></i>
           <% end %>
         </div>
         <%= form_with(model: @review, url: booking_reviews_path(@booking), scope: :review, local: true) do |form| %>
-
-          <div class="mb-3">
-            <%= form.label :rating, 'Rating', class: 'sr-only' %>
-            <%= form.number_field :rating, class: 'form-control round_textbox', placeholder: 'Rate this from 1 - 5' %>
-          </div>
-
+          <%= form.hidden_field :rating, value: 1, id: "rating-input" %>
           <div class="mb-3">
             <%= form.label :content, 'Review Content', class: 'sr-only' %>
-            <%= form.text_area :content, class: "form-control round_textbox", placeholder: 'Tell us what you thought', rows: 5 %>
+            <%= form.text_area :content, class: "form-control round_textbox", placeholder: 'Tell us what you think... (at least ten characters required)', rows: 5, id: 'review-content' %>
           </div>
-
           <div class="d-flex justify-content-center">
-            <%= form.submit 'Submit Review', class: 'btn btn-primary rounded-pill' %>
+            <%= form.submit 'Submit Review', class: 'btn btn-primary rounded-pill', disabled: true, id: 'submit-button' %>
           </div>
         <% end %>
-
-      <% elsif @booking.end_date > Date.today %>
-        <h2 class="text-center">You can't review this property yet</h2>
-      <% else %>
-        <%= render partial: "review_card", locals: { review: @review }  %>
-      <% end %>
-
-
-    </div>
-
+      </div>
+    <% else %>
+      <h2 class="text-center" style="white-space: nowrap;">You can't review this property yet</h2>
+    <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating-input');
+    const reviewContent = document.getElementById('review-content');
+    const submitButton = document.getElementById('submit-button');
+
+    stars.forEach(star => {
+      star.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        ratingInput.value = index; // Update the hidden input field's value
+        updateStars(index);
+        validateForm(); // Check if form can be submitted
+      });
+    });
+
+    reviewContent.addEventListener('input', validateForm); // Check when content is typed
+
+    function updateStars(index) {
+      stars.forEach((star, idx) => {
+        if (idx < index) {
+          star.classList.add('fas');
+          star.classList.remove('far');
+        } else {
+          star.classList.add('far');
+          star.classList.remove('fas');
+        }
+      });
+    }
+
+    function validateForm() {
+      const ratingSelected = parseInt(ratingInput.value, 10) > 0;
+      const contentLength = reviewContent.value.trim().length >= 10;
+      submitButton.disabled = !(ratingSelected && contentLength); // Enable button if both conditions are met
+    }
+  });
+</script>
