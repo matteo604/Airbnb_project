@@ -17,14 +17,15 @@ export default class extends Controller {
     const startDate = new Date(this.startDateTarget.value);
     const endDate = new Date(this.endDateTarget.value);
     const numberOfGuests = this.guestsTarget.value;
-    const totalDays = (endDate - startDate)/(1000 * 60 * 60 * 24)
     const price_per_night = this.nightValue;
-    console.log(price_per_night);
-    if (startDate && endDate && numberOfGuests) {
+    const myDiv = document.getElementById("total-price")
+    if (!isNaN(startDate) && !isNaN(endDate) && !isNaN(numberOfGuests)) {
+      const totalDays = (endDate - startDate)/(1000 * 60 * 60 * 24)
       const totalPrice = price_per_night * numberOfGuests * totalDays;
-      console.log(totalPrice);
-      const myDiv = document.getElementById("total-price")
-      myDiv.textContent = totalPrice + "$"
+      myDiv.textContent = totalPrice.toFixed(2) + "$"
+    }
+    else {
+      myDiv.innerHTML = "--"
     }
   }
 }
