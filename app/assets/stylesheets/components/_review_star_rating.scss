@@ -1,0 +1,16 @@
+.rating {
+  cursor: pointer;
+  display: flex;
+  justify-content: center; /* Centers the stars horizontally */
+  margin-top: 30px; /* adds space above the stars */
+  margin-bottom: 30px; /* Adds space below the stars */
+}
+
+.star {
+  color: rgb(12, 11, 2); /* Gives the stars a color */
+  margin-right: 10px; /* Spacing between stars */
+}
+
+.star:last-child {
+  margin-right: 0; /* rremoves margin from the last star to maintain symmetry */
+}
