@@ -1,8 +1,12 @@
-class RenameLatLngToLatitudeLongitude < ActiveRecord::Migration[7.1]
+class RenameLatLngToLatitudeLongitude < ActiveRecord::Migration[6.1]
   def change
-    change_table(:properties) do |t|
-    t.rename(:lat, :latitude)
-    t.rename(:lng, :longitude)
+    change_table :properties do |t|
+      if column_exists?(:properties, :lat) && !column_exists?(:properties, :latitude)
+        t.rename :lat, :latitude
+      end
+      if column_exists?(:properties, :lng) && !column_exists?(:properties, :longitude)
+        t.rename :lng, :longitude
+      end
     end
   end
 end

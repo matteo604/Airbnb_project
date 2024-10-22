@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_164123) do
     t.date "start_date"
     t.date "end_date"
     t.integer "number_of_guests"
-    t.decimal "total_price", precision: 10, scale: 2
+    t.decimal "total_price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_bookings_on_property_id"
@@ -65,8 +65,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_21_164123) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "longitude"
     t.float "latitude"
+    t.float "longitude"
+    t.float "lng"
+    t.float "lat"
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
