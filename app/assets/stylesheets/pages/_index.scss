@@ -6,17 +6,13 @@
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out; /* Smooth transitions */
 }
 
 .property-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  background-color: lightgrey;
-}
-
-.property-card:hover .card-footer {
-  background-color: lightgrey;
+  background-color: rgba(211, 211, 211, 0.2);
 }
 
 .property-card .card-img-top {

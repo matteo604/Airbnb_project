@@ -14,4 +14,10 @@ class Property < ApplicationRecord
     using: {
       tsearch: { prefix: true } # enable prefix search to match partial words
     }
+
+  # validation for max_guests
+  validates :max_guests, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 16, only_integer: true }
+
+  # validation for price_per_night to ensure it is at least 1 and non-negative
+  validates :price_per_night, numericality: { greater_than_or_equal_to: 1, message: "must be a min. of 1" }
 end
