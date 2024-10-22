@@ -10,28 +10,95 @@
   </div>
 <% end %>
 
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-center" data-controller="properties"> <!-- Stimulus Controller added -->
 
   <div class="m-3 property-card col-6 p-5">
 
     <h4 class="text-center">Create a property</h4>
 
     <%= simple_form_for(@property, html: { multipart: true }) do |f| %>
-      <%= f.input :title, input_html: { class: "form-control round_textbox" } %>
-      <%= f.input :description, input_html: { class: "form-control round_textbox", rows: 6 } %>
+
+      <!-- title -->
+      <%= f.input :title, input_html: {
+        class: "form-control round_textbox",
+        data: { properties_target: "title" },
+        placeholder: "Enter a title (at least 10 characters)"
+      } %>
+
+      <!-- description -->
+      <%= f.input :description, input_html: {
+        class: "form-control round_textbox",
+        rows: 6,
+        data: { properties_target: "description" },
+        placeholder: "A more detailed and informative description of your property will attract more guests and increase your chances of bookings."
+      } %>
+
+      <!-- location -->
       <%= f.input :location,
         input_html: {data: {location_autocomplete_target: "location"}, class: "d-none"},
-        wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+        wrapper_html: {data: {controller: "location-autocomplete", location_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]} }
       %>
-      <%= f.input :price_per_night, as: :decimal, input_html: { class: "form-control round_textbox" } %>
-      <%= f.input :property_type, collection: ['Hotel', 'Flat', 'Room', 'Apartment', 'Block of flat', 'Bed and Breakfast', 'Motel'], prompt: "Select building type", input_html: { class: "form-control round_textbox" }%>
-      <%= f.input :max_guests, as: :integer, input_html: { class: "form-control round_textbox" } %>
-      <%= f.input :photos, as: :file, input_html: { multiple: true, class: "form-control round_textbox"} %>
-      <div class="d-flex justify-content-center mt-4">
-        <%= f.submit class: 'btn btn-primary rounded-pill fs-5 px-4'%>
+
+      <!-- Flexbox container for price per night and max guests -->
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <!-- price per night (25%) -->
+        <div style="flex: 0 0 25%; margin-right: 20px;">
+          <%= f.input :price_per_night, as: :decimal, input_html: {
+            class: "form-control round_textbox",
+            data: { properties_target: "pricePerNight" },
+            min: 1,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
+            style: "font-size: 15px;"
+          } %>
+        </div>
+
+        <!-- max guests slider (70%) -->
+        <div style="flex: 0 0 70%;">
+          <label for="max_guests_slider">Maximum Guests: <span id="max_guests_value">1</span></label>
+          <div id="guests-icons" class="d-flex"></div> <!-- guests icons will appear here -->
+          <input type="range" id="max_guests_slider" name="property[max_guests]" min="1" max="16" value="1" step="1" class="form-range">
+        </div>
       </div>
 
+      <!-- property type) -->
+      <%= f.input :property_type, collection: ['Hotel', 'Flat', 'Room', 'Apartment', 'Block of flat', 'Bed and Breakfast', 'Motel'], prompt: "Select building type", input_html: { class: "form-control round_textbox", data: { properties_target: "propertyType" } } %>
+
+      <!-- photo upload -->
+      <%= f.input :photos, as: :file, input_html: { multiple: true, class: "form-control round_textbox"} %>
+
+      <!-- Submit Button (disabled initially) -->
+      <div class="d-flex justify-content-center mt-4">
+        <%= f.submit 'Create Property', class: 'btn btn-primary rounded-pill fs-5 px-4', disabled: true, data: { properties_target: "submitButton" } %>
+      </div>
 
     <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    const slider = document.getElementById('max_guests_slider');
+    const guestsIconsContainer = document.getElementById('guests-icons');
+    const output = document.getElementById('max_guests_value');
+
+    // function to update the icons and the number based on the slider value
+    function updateGuestsIcons(value) {
+      guestsIconsContainer.innerHTML = ''; // clear previous icons
+      for (let i = 0; i < value; i++) {
+        const icon = document.createElement('i');
+        icon.classList.add('fa', 'fa-user', 'me-2'); // 'me-2' adds spacing between icons
+        guestsIconsContainer.appendChild(icon);
+      }
+      output.textContent = value == 16 ? "16+" : value; // show "16+" for max value
+    }
+
+    // initial setting of icons and number
+    updateGuestsIcons(slider.value);
+
+    // update icons and number when slider value changes
+    slider.oninput = function() {
+      updateGuestsIcons(this.value);
+    };
+  });
+</script>
