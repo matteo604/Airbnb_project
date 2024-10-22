@@ -20,3 +20,27 @@
     }
   }
 }
+
+
+/* show the icons only when hover over the image */
+.card:hover .carousel-control-prev,
+.card:hover .carousel-control-next {
+  display: block;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(255, 255, 255, 0.265); /* background color half transparent */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  background-color: rgba(0, 0, 0, 0.219); /* changes the background when you hover */
+  filter: brightness(0) invert(1); /* changes the arrows when hover */
+  opacity: 0.9;
+  transition: all 0.3s ease; /* soft flow when you hover */
+  filter: invert(1);
+}
