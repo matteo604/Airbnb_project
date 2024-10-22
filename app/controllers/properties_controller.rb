@@ -28,11 +28,11 @@ class PropertiesController < ApplicationController
       @properties = @properties.where("max_guests >= ?", params[:who].to_i)
     end
 
-    if params[:start_date].present?
-      if (start_date(booking) && end_date(booking) < start_date(search) && end_date(search) || start_date(booking) && end_date(booking) > start_date(search) && end_date(search))
-        @properties = @properties.where("date_availability >= ?", params[:status])
-      end
-    end
+    # if params[:start_date].present?
+    #   if (start_date(booking) && end_date(booking) < start_date(search) && end_date(search) || start_date(booking) && end_date(booking) > start_date(search) && end_date(search))
+    #     @properties = @properties.where("date_availability >= ?", params[:status])
+    #   end
+    # end
 
     if @properties.empty?
       flash[:alert] = "No properties found matching your criteria."

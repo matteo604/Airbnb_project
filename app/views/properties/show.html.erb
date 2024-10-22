@@ -34,7 +34,7 @@
         </div>
         <div class="card-footer">
           <% if current_user && @property.user == current_user %>
-            <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary" %>
+            <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary", style: "margin-right: 5px;"%>
           <% end %>
           <%= link_to 'Back', properties_path, class: "btn btn-secondary" %>
         </div>
