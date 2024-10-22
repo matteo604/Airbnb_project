@@ -1,6 +1,6 @@
 <div class="container" data-controller="rating">
   <div>
-    <%= render partial: "booking_details_card", locals: { booking: @booking }  %>
+    <%= render partial: "booking_details_card", locals: { booking: @booking, hide_element: true }  %>
   </div>
 
   <div class="col-md-4 offset-md-4">
@@ -32,9 +32,7 @@
       <% end %>
     <% else %>
       <!-- Show the existing rating, if one exists -->
-      <div id="reviews">
-        <%= render partial: 'bookings/review_card', locals: { review: @booking.review } %>
-      </div>
+      <%= render partial: 'bookings/review_card', locals: { review: @booking.review } %>
     <% end %>
   </div>
 </div>
