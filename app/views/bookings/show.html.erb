@@ -32,10 +32,8 @@
       <% end %>
     <% else %>
       <!-- Show the existing rating, if one exists -->
-      <div class="property-card p-4">
-        <h5 class="text-center">Your Review</h5>
-        <p><strong>Rating:</strong> <%= @booking.review.rating %> stars</p>
-        <p><strong>Review:</strong> <%= @booking.review.content %></p>
+      <div id="reviews">
+        <%= render partial: 'bookings/review_card', locals: { review: @booking.review } %>
       </div>
     <% end %>
   </div>
