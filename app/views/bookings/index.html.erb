@@ -2,10 +2,19 @@
   <div class="container mt-4">
 
     <div class="one_column">
+      <% if @bookings.empty? %>
+        <div class="mt-10">
+          <h4 class="text-center mt-10">You have no bookings yet. Make a booking and come back soon!</h4>
+        </div>
 
-      <% @bookings.each do |booking| %>
-        <%= render partial: "booking_details_card", locals: { booking: booking }  %>
-      <% end  %>
+      <% else %>
+
+        <% @bookings.each do |booking| %>
+          <%= render partial: "booking_details_card", locals: { booking: booking }  %>
+        <% end  %>
+
+      <% end %>
+
 
     </div>
   </div>

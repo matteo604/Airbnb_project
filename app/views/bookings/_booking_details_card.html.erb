@@ -40,7 +40,9 @@
         <li>Booked on : <%= booking.created_at.strftime('%d %b %Y') %></li>
         <li>Number of guests : <%= booking.number_of_guests %></li>
         <li>Total price paid : <%= number_to_currency(booking.total_price) %></li>
-        <p class="mt-2"><%= link_to "View Booking", booking_path(booking), class: "text-decoration-none" %></p>
+        <% unless local_assigns[:hide_element] %>
+          <p class="mt-2"><%= link_to "View Booking", booking_path(booking), class: "text-decoration-none" %></p>
+        <% end %>
       </ul>
     </div>
   </div>

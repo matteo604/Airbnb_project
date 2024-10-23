@@ -43,6 +43,15 @@
             <p>No reviews yet.</p>
           <% end %>
         </div>
+<<<<<<< HEAD
+=======
+        <div class="card-footer">
+          <% if current_user && @property.user == current_user %>
+            <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary", style: "margin-right: 5px;"%>
+          <% end %>
+          <%= link_to 'Back', properties_path, class: "btn btn-secondary" %>
+        </div>
+>>>>>>> 185685ecc7e91d07eb9d1a09749b3cab59bfcaaf
       </div>
 
       <!-- Thumbnails (Div 2) -->
