@@ -2,7 +2,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["startDate", "endDate", "guests", "totalPrice"];
+  static targets = ["startDate", "endDate", "totalPrice"];
   static values = {night: Number}
 
   connect() {
@@ -16,12 +16,11 @@ export default class extends Controller {
   calculatePrice() {
     const startDate = new Date(this.startDateTarget.value);
     const endDate = new Date(this.endDateTarget.value);
-    const numberOfGuests = this.guestsTarget.value;
     const totalDays = (endDate - startDate)/(1000 * 60 * 60 * 24)
     const price_per_night = this.nightValue;
     const myDiv = document.getElementById("total-price")
-    if (!isNaN(startDate) && !isNaN(endDate) && !isNaN(numberOfGuests)) {
-      const totalPrice = price_per_night * numberOfGuests * totalDays;
+    if (!isNaN(startDate) && !isNaN(endDate)) {
+      const totalPrice = price_per_night * totalDays;
       console.log(endDate)
       myDiv.textContent = totalPrice + "$"
     } else {
