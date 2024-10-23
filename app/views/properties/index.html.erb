@@ -46,50 +46,50 @@
   <div class="row">
     <div class="col-8 d-flex row">
       <% @properties.each do |property| %>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-4">
           <div class="card h-100 property-card">
-          <% if property.photos.attached? %>
-          <div id="carousel-<%= property.id %>" class="carousel slide">
-            <div class="carousel-inner">
-              <% property.photos.each_with_index do |photo, index| %>
-                <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= cl_image_tag photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
-                </div>
-              <% end %>
+            <% if property.photos.attached? %>
+            <div id="carousel-<%= property.id %>" class="carousel slide">
+              <div class="carousel-inner">
+                <% property.photos.each_with_index do |photo, index| %>
+                  <div class="carousel-item <%= 'active' if index == 0 %>">
+                    <%= cl_image_tag photo.key, crop: :fill, height: 200, class: "img-fluid card-img-top" %>
+                  </div>
+                <% end %>
+              </div>
+              <a class="carousel-control-prev" href="#carousel-<%= property.id %>" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carousel-<%= property.id %>" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
             </div>
-            <a class="carousel-control-prev" href="#carousel-<%= property.id %>" role="button" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel-<%= property.id %>" role="button" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        <% else %>
-          <p> No photos </p>
-        <% end %>  <!-- end of the if statement -->
+          <% else %>
+            <p> No photos </p>
+          <% end %>  <!-- end of the if statement -->
 
             <% total_reviews = property.reviews.count %>
             <% total_rating = property.reviews.sum(:rating) %>
             <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
             <div class="card-body">
-             <h5 class="card-title mb-2">
-               <div class="d-flex justify-content-between align-items-center">
-                 <%= link_to property.title, property_path(property), class: "text-dark fw-bold text-decoration-none" %>
-                 <% if total_reviews > 0 %>
-                   <div class="d-flex align-items-center">
-                   <span class="text-warning">⭐</span>
-                   <span class="ms-1 small text-muted">(<%= average_rating.round(2) %>)</span>
+              <h5 class="card-title mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                  <%= link_to property.title, property_path(property), class: "text-dark fw-bold text-decoration-none" %>
+                    <% if total_reviews > 0 %>
+                      <div class="d-flex align-items-center">
+                        <span class="text-warning">⭐</span>
+                        <span class="ms-1 small text-muted">(<%= average_rating.round(2) %>)</span>
+                      </div>
+                    <% end %>
                 </div>
-                <% end %>
-               </div>
-             </h5>
-            <p class="card-text"><%= property.description %></p>
-            <p><strong><%= property.city %></strong></p>
+              </h5>
+              <p class="card-text"><%= property.description %></p>
+              <p><i class="fa-solid fa-location-dot"></i><strong> <%= property.city %></strong></p>
             </div>
 
-            <div class="card-footer mt-auto d-flex justify-content-between">
+            <div class="index-card-footer mt-auto d-flex justify-content-between">
               <p class="text-left">
                 <i class="fas fa-users guest-icon"></i>
                 <span class="max-guests-text"> max. <%= property.max_guests %></span>
