@@ -42,7 +42,7 @@
       <!-- Flexbox container for price per night and max guests -->
       <div class="d-flex align-items-center justify-content-between mb-3">
         <!-- price per night (25%) -->
-        <div style="flex: 0 0 25%; margin-right: 20px;">
+        <div style="flex: 0 0 25%;" class="price-section">
           <%= f.input :price_per_night, as: :decimal, input_html: {
             class: "form-control round_textbox",
             data: { properties_target: "pricePerNight" },
@@ -55,7 +55,9 @@
 
         <!-- max guests slider (70%) -->
         <div style="flex: 0 0 70%;">
-          <label for="max_guests_slider">Maximum Guests: <span id="max_guests_value">1</span></label>
+          <label for="max_guests_slider" id="max_guests_label">
+            Maximum Guests: <span id="max_guests_value">1</span>
+          </label>
           <div id="guests-icons" class="d-flex"></div> <!-- guests icons will appear here -->
           <input type="range" id="max_guests_slider" name="property[max_guests]" min="1" max="16" value="1" step="1" class="form-range">
         </div>

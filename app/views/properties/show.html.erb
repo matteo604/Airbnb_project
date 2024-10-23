@@ -1,18 +1,21 @@
-<h1 class="text-center"><%= @property.title %></h1>
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-5">
-      <div class="card">
-        <% if @property.photos.attached? %>
-          <img src="<%= cl_image_path(@property.photos.first.key) %>" class="card-img-top" alt="<%= @property.title %>">
-        <% else %>
-          <p>No photos available</p>
-        <% end %>
-        <div class="card-body">
+<div id="property-show-page">
+  <h1 class="text-center"><%= @property.title %></h1>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Main Image (Div 1) -->
+      <div class="col-6 p-3" style="display: flex; flex-direction: column;" id="div-1">
+        <!-- Main image container -->
+        <div class="main-image-container mb-3" style="flex: 1;">
+          <% if @property.photos.attached? %>
+            <img id="mainImage" src="<%= cl_image_path(@property.photos.first.key) %>" class="img-fluid w-100" alt="<%= @property.title %>">
+          <% else %>
+            <img id="mainImage" src="/path_to_placeholder_image.jpg" class="img-fluid w-100" alt="Placeholder image">
+          <% end %>
+        </div>
+
+        <!-- Property Description (Div 4) -->
+        <div class="property-description">
           <h5 class="card-title"><%= @property.title %></h5>
-          <% total_reviews = @property.reviews.count %>
-          <% total_rating = @property.reviews.sum(:rating) %>
-          <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
           <p class="card-text"><%= @property.description %></p>
           <p class="card-text"><strong>Location:</strong> <%= @property.location %></p>
           <p class="card-text">
@@ -21,120 +24,155 @@
           </p>
           <p class="card-text"><strong>Property Type:</strong> <%= @property.property_type %></p>
           <p class="card-text"><strong>Max Guests:</strong> <%= @property.max_guests %></p>
+
+          <% total_reviews = @property.reviews.count %>
+          <% total_rating = @property.reviews.sum(:rating) %>
+          <% average_rating = total_rating.to_f / total_reviews if total_reviews > 0 %>
+
           <% if total_reviews > 0 %>
           <div class="rating-section">
             <a href="#reviews" class="card-text" style="text-decoration:none">
-              <strong>Rating:</strong> <%= "⭐" * average_rating.round %> (<%= average_rating.round(2) %>)
+              <strong>Rating:</strong>
+              <% average_rating.round.times do %>
+                <i class="fas fa-star" style="color: black;"></i>
+              <% end %>
+              (<%= average_rating.round(2) %>)
             </a>
           </div>
-
           <% else %>
             <p>No reviews yet.</p>
           <% end %>
         </div>
-        <div class="card-footer">
-          <% if current_user && @property.user == current_user %>
-            <%= link_to 'Edit', edit_property_path(@property), class: "btn btn-primary" %>
-          <% end %>
-          <%= link_to 'Back', properties_path, class: "btn btn-secondary" %>
-        </div>
       </div>
-    </div>
-    <div class="col-6">
-      <div style="width: 100%; height: 100%;"
-          data-controller="map"
-          data-map-markers-value="<%= @markers.to_json %>"
-          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-      </div>
-    </div>
-    <div class="col-md-7 offset-md-2">
-      <% if @property.user == current_user %>
-        <div class="container mt-7">
-          <div class="mb-4 mt-4 text-center">
-            <h3>Future Bookings</h3>
-            <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
-            <% if future_bookings.any? %>
-              <div class="alert alert-danger" role="alert">
-                Status: <strong> Not available </strong>
-              </div>
-            <% else %>
-              <div class="alert alert-success" role="alert">
-                Status: <strong> Available </strong>
-              </div>
-            <% end %>
 
-            <% if future_bookings.any? %>
-              <table class="table table-bordered mt-5">
-                <thead>
-                  <tr>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Number of Guests</th>
-                    <th>Total Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% future_bookings.each do |booking| %>
-                    <tr>
-                      <td><%= booking.start_date.strftime('%B %d, %Y') %></td>
-                      <td><%= booking.end_date.strftime('%B %d, %Y') %></td>
-                      <td><%= booking.number_of_guests %></td>
-                      <td><%= number_to_currency(booking.total_price) %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            <% else %>
-              <p class="mt-3">No future bookings.</p>
-            <% end %>
-          </div>
+      <!-- Thumbnails (Div 2) -->
+      <div class="col-6 p-3" style="display: flex; flex-direction: column;" id="div-2">
+        <!-- Thumbnails container -->
+        <div class="thumbnail-container mb-3" style="flex: 1;" id="thumbnail-container">
+          <% @property.photos.each_with_index do |photo, index| %>
+            <div class="thumbnail">
+              <img src="<%= cl_image_path(photo.key) %>" class="img-fluid thumbnail-image" data-key="<%= cl_image_path(photo.key) %>" alt="Thumbnail <%= index %>">
+            </div>
+          <% end %>
+
+          <!-- Placeholder Icons for missing images -->
+          <% (9 - @property.photos.size).times do %>
+            <div class="thumbnail placeholder-thumbnail d-flex align-items-center justify-content-center">
+              <i class="fas fa-camera fa-3x" style="color: #888;"></i> <!-- FontAwesome camera icon -->
+            </div>
+          <% end %>
         </div>
-      <% else %>
-        <%if current_user %>
-    <h3 class="text-center mb-4 mt-4">Book this property</h3>
-    <%= form_with(model: @booking, url: property_bookings_path(@property), scope: :booking, local: true, html: { class: 'booking-form' }) do |form| %>
-      <div class="input-group fs-3 mb-4" data-controller="price" data-price-night-value="<%= @property.price_per_night %>">
-        <% if @booking.errors.any? %>
-          <div class="alert alert-danger">
-            <ul>
-              <% @booking.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <div class="search-input px-3 text-center">
-          <%= form.label :start_date, 'Check in', for: 'check-in', class: 'fs-6 mb-4' %>
-          <%= form.date_field :start_date, id: 'check-in', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'startDate', controller: 'datepicker' } %>
-        </div>
-        <div class="search-input px-3 text-center">
-          <%= form.label :end_date, 'Check out', for: 'check-out', class: 'fs-6 mb-4' %>
-          <%= form.date_field :end_date, id: 'check-out', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'endDate', controller: 'datepicker' } %>
-        </div>
-        <div class="search-input px-3 text-center">
-          <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'fs-6 mb-4' %>
-          <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown text-center', data: { action: 'change->price#updatePrice', price_target: 'guests' } } %>
-        </div>
+
+        <!-- Map (Div 3) -->
+        <div class="map" id="propertyMap" style="width: 100%; height: 400px;" data-controller="map" data-map-markers-value="<%= @markers.to_json %>" data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
       </div>
-      <div class="text-center mt-4">
-        <h4>Total Price: <span id="total-price">--</span></h4>
-      </div>
-      <div class="form-group mt-3 align-text: end d-flex justify-content-center">
-        <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
-      </div>
-    <% end %>
-  <%end %>
-  <h2 class="text-center" style="padding-top: 60px; margin-top: 20px;">Reviews</h2>
-    <% if @property.reviews.any? %>
-     <% @property.reviews.each do |review| %>
-      <div id="reviews">
-      <%= render partial: 'bookings/review_card', locals: { review: review } %>
-      </div>
-     <% end %>
-   <% else %>
-    <p class="text-muted text-center">No reviews yet.</p>
-   <% end %>
-  <% end %>
     </div>
   </div>
+
+  <!-- Future Bookings Section -->
+  <div class="col-md-7 offset-md-2 mt-5">
+    <% if @property.user == current_user %>
+      <div class="container mt-7">
+        <div class="text-center">
+          <h3>Future Bookings</h3>
+          <% future_bookings = @property.bookings.select { |booking| booking.start_date >= Date.today } %>
+          <% if future_bookings.any? %>
+            <div class="alert alert-danger mt-4" role="alert">
+              Status: <strong>Not available</strong>
+            </div>
+          <% else %>
+            <div class="alert alert-success mt-4" role="alert">
+              Status: <strong>Available</strong>
+            </div>
+          <% end %>
+
+          <% if future_bookings.any? %>
+            <table class="table table-striped table-hover mt-5">
+              <thead class="table-dark">
+                <tr>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Guests</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% future_bookings.each do |booking| %>
+                  <tr>
+                    <td><%= booking.start_date.strftime('%B %d, %Y') %></td>
+                    <td><%= booking.end_date.strftime('%B %d, %Y') %></td>
+                    <td><%= booking.number_of_guests %></td>
+                    <td><%= number_to_currency(booking.total_price) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p class="mt-3 text-muted">No future bookings.</p>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <% if current_user %>
+        <h3 class="text-start mb-4 mt-4">Book this Property</h3>
+        <%= form_with(model: @booking, url: property_bookings_path(@property), scope: :booking, local: true, html: { class: 'booking-form' }) do |form| %>
+          <div class="input-group fs-3 mb-4" data-controller="price" data-price-night-value="<%= @property.price_per_night %>">
+            <% if @booking.errors.any? %>
+              <div class="alert alert-danger">
+                <ul>
+                  <% @booking.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="search-input px-3 text-center">
+              <%= form.label :start_date, 'Check in', for: 'check-in', class: 'fs-6 mb-4' %>
+              <%= form.date_field :start_date, id: 'check-in', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'startDate', controller: 'datepicker' } %>
+            </div>
+            <div class="search-input px-3 text-center">
+              <%= form.label :end_date, 'Check out', for: 'check-out', class: 'fs-6 mb-4' %>
+              <%= form.date_field :end_date, id: 'check-out', type: 'date', placeholder: 'Add dates', class: 'form-control text-center', data: { action: 'input->price#updatePrice', price_target: 'endDate', controller: 'datepicker' } %>
+            </div>
+            <div class="search-input px-3 text-center">
+              <%= form.label :number_of_guests, 'Number of guests', for: 'who', class: 'fs-6 mb-4' %>
+              <%= form.select :number_of_guests, options_for_select((1..@property.max_guests).map { |i| [i, i] }, selected: nil), { include_blank: 'Add guests' }, { id: 'who', class: 'form-control white-border-dropdown text-center', data: { action: 'change->price#updatePrice', price_target: 'guests' } } %>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <h4>Total Price: <span id="total-price">--</span></h4>
+          </div>
+          <div class="form-group mt-3 align-text: end d-flex justify-content-center">
+            <%= form.submit 'Confirm Booking', class: 'btn btn-primary rounded-pill fs-5 px-4' %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <h2 class="text-center mt-5">Reviews</h2>
+    <% if @property.reviews.any? %>
+      <% @property.reviews.each do |review| %>
+        <div id="reviews" class="mb-4">
+          <%= render partial: 'bookings/review_card', locals: { review: review } %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted text-center mt-4">No reviews yet.</p>
+    <% end %>
+  </div>
+
+  <!-- Add JavaScript for Thumbnail Click -->
+  <script>
+    document.addEventListener("turbo:load", function() {
+      const mainImage = document.getElementById('mainImage');
+      const thumbnails = document.querySelectorAll('.thumbnail-image');
+
+      // Iterate over all thumbnails and add click event
+      thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+          mainImage.src = this.getAttribute('data-key'); // Set clicked thumbnail as main image
+        });
+      });
+    });
+  </script>
 </div>

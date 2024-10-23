@@ -1,6 +1,7 @@
 #guests-icons {
   margin-top: 5px; /* increases the spacing above the icons */
-  margin-bottom: 5px;  /* increases the spacing below the icons */
+  margin-bottom: 5px;  /* increasest the spacing below the icons */
+  color: grey;
 }
 
 #guests-icons i {
@@ -8,15 +9,15 @@
   font-size: 1.12rem;
 }
 
-/* base styling for the slider */
+/* styling for the slider */
 input[type="range"] {
-  appearance: none; /* remove default browser appearance */
+  appearance: none; /* remove default browwser appearance */
   width: 100%;
-  height: 6px; /* reduced height for a thinner line */
+  height: 6px; /* reduced heighfor a thinner line */
   background: #ddd; /* light gray background */
   border-radius: 5px;
   outline: none;
-  transition: background 0.3s ease; /* smooth background transition on hover */
+  transition: background 0.3s ease; /* smoooth background transition on hover */
 }
 
 /* styling for the slider thumb (the handle) */
@@ -34,7 +35,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  margin-top: -7px; /* adjust to vertically center the thumb */
+  margin-top: -7px; /* adjust to vertically center the tumb */
   border-radius: 50%;
   background: #007bff; /* blue thumb color for firefox */
   cursor: pointer;
@@ -66,4 +67,16 @@ input[type="range"]::-moz-range-track {
   height: 6px; /* reduced height for a thinner line */
   border-radius: 5px;
   background: linear-gradient(90deg, #007bff, #ddd); /* blue gradient from start to end for firefox */
+}
+
+.form-label {
+  margin-top: 0;
+}
+
+.guest-slider-label {
+  margin-top: -15px;
+}
+
+#max_guests_label{
+  margin-bottom: 5px;
 }
