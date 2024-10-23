@@ -16,33 +16,46 @@ class PropertiesController < ApplicationController
   end
 
   def search
-    if params[:query].present?
-      # search properties using pg_search
-      @properties = Property.search_by_title_and_location(params[:query])
-    else
-      @properties = Property.all
-    end
+    @properties = if params[:query].present?
+                    # Search properties using pg_search
+                    Property.search_by_title_and_location(params[:query])
+                  else
+                    Property.all
+                  end
 
+    # Filter by number of guests if 'who' parameter is provided
     if params[:who].present?
-      # filter properties by the number of guests (max_guests >= selected number)
       @properties = @properties.where("max_guests >= ?", params[:who].to_i)
     end
 
-    # if params[:start_date].present?
-    #   if (start_date(booking) && end_date(booking) < start_date(search) && end_date(search) || start_date(booking) && end_date(booking) > start_date(search) && end_date(search))
-    #     @properties = @properties.where("date_availability >= ?", params[:status])
-    #   end
-    # end
+    # Filter by availability date range if both start_date and end_date are provided
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date]) rescue nil
+      end_date = Date.parse(params[:end_date]) rescue nil
 
+      if start_date && end_date
+        @properties = @properties.select do |property|
+          property.bookings.none? do |booking|
+            # Check if booking dates overlap with the search range
+            booking.start_date < end_date && booking.end_date > start_date
+          end
+        end
+      else
+        flash[:alert] = "Invalid date range. Please enter valid start and end dates."
+      end
+    end
+
+    # Show flash message if no properties match the criteria
     if @properties.empty?
       flash[:alert] = "No properties found matching your criteria."
     end
 
+    # Generate markers for Mapbox
     @markers = @properties.geocoded.map do |property|
       {
         lat: property.latitude,
         lng: property.longitude,
-        info_window: render_to_string(partial: "popup", locals: {property: property}),
+        info_window: render_to_string(partial: "popup", locals: { property: property }),
         marker_html: "<i class='fas fa-map-marker-alt' style='color: black; font-size: 30px;'></i>"
       }
     end

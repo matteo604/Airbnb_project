@@ -7,7 +7,21 @@
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out; /* Smooth transitions */
-}
+  .index-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 10%;
+    padding: 17px;
+    border-top: none;
+  }
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(211, 211, 211, 0.2) !important;
+  }
+
 
 .property-card:hover {
   transform: scale(1.01);
@@ -64,15 +78,6 @@
 
 .card img{
   height: 350px;
-}
-
-.card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 10%;
-  background-color: white;
-  border-top: none;
 }
 
 .booking-form {
