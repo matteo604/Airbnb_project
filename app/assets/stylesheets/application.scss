@@ -13,12 +13,12 @@
 @import "pages/index";
 @import "auth_forms";
 @import "components/searchbar";
-@import "components/image_carousel";
 @import url("https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css");
 @import "pages/new_property";
+@import "pages/show_property";
+@import "components/image_carousel";
 @import "components/review_star_rating";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 body, h1, h2, h3, h4, h5, h6, p, a, span, li, input, button{
   font-family: 'Roboto', sans-serif;
 }
-

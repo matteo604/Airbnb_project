@@ -1,9 +1,82 @@
 #guests-icons {
   margin-top: 5px; /* increases the spacing above the icons */
-  margin-bottom: 5px;  /* increases the spacing below the icons */
+  margin-bottom: 5px;  /* increasest the spacing below the icons */
+  color: grey;
 }
 
 #guests-icons i {
   margin-right: 25px;
   font-size: 1.12rem;
+}
+
+/* styling for the slider */
+input[type="range"] {
+  appearance: none; /* remove default browwser appearance */
+  width: 100%;
+  height: 6px; /* reduced heighfor a thinner line */
+  background: #ddd; /* light gray background */
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease; /* smoooth background transition on hover */
+}
+
+/* styling for the slider thumb (the handle) */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none; /* remove default appearance for webkit browsers */
+  width: 20px;
+  height: 20px;
+  margin-top: -7px; /* adjust to vertically center the thumb */
+  border-radius: 50%; /* make the thumb circular */
+  background: #007bff; /* blue thumb color */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* smooth transitions on hover */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  margin-top: -7px; /* adjust to vertically center the tumb */
+  border-radius: 50%;
+  background: #007bff; /* blue thumb color for firefox */
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease; /* smooth transitions on hover */
+}
+
+/* hover effect for the thumb */
+input[type="range"]::-webkit-slider-thumb:hover,
+input[type="range"]::-moz-range-thumb:hover {
+  background: #0056b3; /* lighter blue on hover */
+  transform: scale(1.1); /* scale the thumb slightly on hover */
+}
+
+/* hover effect for the slider track */
+input[type="range"]:hover {
+  background: #ccc; /* darker gray background on hover */
+}
+
+/* styling for the active track (the slider line) */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px; /* reduced height for a thinner line */
+  border-radius: 5px;
+  background: linear-gradient(90deg, #007bff, #ddd); /* blue gradient from start to end */
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 6px; /* reduced height for a thinner line */
+  border-radius: 5px;
+  background: linear-gradient(90deg, #007bff, #ddd); /* blue gradient from start to end for firefox */
+}
+
+.form-label {
+  margin-top: 0;
+}
+
+.guest-slider-label {
+  margin-top: -15px;
+}
+
+#max_guests_label{
+  margin-bottom: 5px;
 }
